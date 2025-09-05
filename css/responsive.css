@@ -33,14 +33,19 @@
     /* Typography adjustments */
     h1 {
         font-size: 2rem;
+        color: var(--text-dark-high-contrast);
     }
     
     h2 {
         font-size: 1.8rem;
+        color: var(--primary-blue);
+        font-weight: 800;
     }
     
     h3 {
         font-size: 1.4rem;
+        color: var(--primary-blue);
+        font-weight: 700;
     }
     
     .hero-title {
@@ -49,6 +54,31 @@
     
     .hero-subtitle {
         font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary-blue);
+    }
+    
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: var(--section-text-dark);
+        font-weight: 600;
+    }
+    
+    .service-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--primary-blue);
+    }
+    
+    .service-description {
+        font-size: 1rem;
+        color: var(--text-dark-high-contrast) !important; /* Force black text */
+        font-weight: 600;
+        line-height: 1.5;
     }
     
     /* Container adjustments */
@@ -115,6 +145,9 @@
         font-size: 1.1rem;
         border-radius: 0;
         transition: background-color 0.2s ease;
+        color: var(--text-dark-high-contrast);
+        font-weight: 600;
+        font-size: 1.2rem;
     }
     
     .nav-menu a:hover,
