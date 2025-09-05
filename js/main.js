@@ -466,7 +466,7 @@ function initializeLazyLoading() {
 // Preload critical resources
 function preloadCriticalResources() {
     const criticalImages = [
-        'yvr_scraped_simple/assets/images/Final-logo.png',
+        'Assets/Images/Final-logo.png',
         'yvr_scraped_simple/assets/images/yvr-completed-banner.png'
     ];
     
