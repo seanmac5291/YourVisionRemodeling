@@ -40,7 +40,7 @@ html {
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
     background-color: #ffffff;
@@ -48,7 +48,7 @@ body {
 
 /* ===== TYPOGRAPHY ===== */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     font-weight: 600;
     line-height: 1.2;
     margin-bottom: 1rem;
@@ -384,6 +384,7 @@ a {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
+    margin-top: 3rem;
 }
 
 .service-card {
@@ -497,7 +498,7 @@ a {
 
 .feature-icon i {
     font-size: 2rem;
-    color: var (--text-dark);
+    color: var(--text-dark);
 }
 
 .feature-title {
@@ -1173,4 +1174,245 @@ a {
     .brand-logo {
         max-height: 50px;
     }
+}
+
+/* ===== UX IMPROVEMENTS ===== */
+
+/* Fallback icons when FontAwesome fails to load */
+.service-icon i:before,
+.feature-icon i:before {
+    content: "⚙";
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+/* Specific fallback icons for different services */
+.service-card:nth-child(1) .service-icon i:before { content: "🏠"; } /* Roofing */
+.service-card:nth-child(2) .service-icon i:before { content: "🪟"; } /* Windows */
+.service-card:nth-child(3) .service-icon i:before { content: "🌧️"; } /* Gutters */
+.service-card:nth-child(4) .service-icon i:before { content: "🏢"; } /* Siding */
+.service-card:nth-child(5) .service-icon i:before { content: "🎨"; } /* Painting */
+.service-card:nth-child(6) .service-icon i:before { content: "🔨"; } /* Carpentry */
+.service-card:nth-child(7) .service-icon i:before { content: "🛋️"; } /* Interior Remodeling */
+
+/* Fallback icons for features */
+.feature-box:nth-child(1) .feature-icon i:before { content: "✓"; } /* Licensed */
+.feature-box:nth-child(2) .feature-icon i:before { content: "👥"; } /* Family */
+.feature-box:nth-child(3) .feature-icon i:before { content: "🕒"; } /* 24/7 */
+.feature-box:nth-child(4) .feature-icon i:before { content: "💰"; } /* Free */
+
+/* Enhanced button interactions */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(0);
+    transition: all 0.1s ease;
+}
+
+/* Improved form validation feedback */
+.form-group input:invalid,
+.form-group select:invalid,
+.form-group textarea:invalid {
+    border-color: var(--error-color);
+    box-shadow: 0 0 0 2px rgba(217, 48, 37, 0.1);
+}
+
+.form-group input:valid,
+.form-group select:valid,
+.form-group textarea:valid {
+    border-color: var(--success-color);
+    box-shadow: 0 0 0 2px rgba(19, 115, 51, 0.1);
+}
+
+/* Enhanced focus states for better accessibility */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 74, 118, 0.1);
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+}
+
+/* Improved service card hover effects */
+.service-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Better loading animation */
+.loading-spinner {
+    animation: spin 1s linear infinite, pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+/* Smooth scroll behavior enhancement */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 120px; /* Account for fixed header */
+}
+
+/* Enhanced testimonial navigation */
+.testimonial-dots .dot {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.testimonial-dots .dot:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+/* Improved mobile button sizing for touch */
+@media (max-width: 768px) {
+    .btn {
+        min-height: 48px; /* Better touch target */
+        padding: 14px 24px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        min-height: 48px; /* Better touch target */
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+}
+
+/* Enhanced visual hierarchy */
+.section-title {
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--primary-yellow));
+    border-radius: 2px;
+}
+
+/* Improved floating call button */
+.floating-call-btn {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* ===== ADDITIONAL UX ENHANCEMENTS ===== */
+
+/* Better visual feedback for interactive elements */
+.service-link,
+.nav-menu a,
+.footer-links a {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.service-link:hover,
+.footer-links a:hover {
+    color: var(--primary-blue);
+    transform: translateX(5px);
+}
+
+/* Enhanced brand carousel animation */
+.brands-track {
+    animation: scroll 30s linear infinite;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Better testimonial presentation */
+.testimonial-slide {
+    padding: 3rem 2rem;
+    border-radius: var(--border-radius);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Improved call-to-action buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-yellow), #e5a623);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+/* Better form styling */
+.contact-form {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 3rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced section transitions */
+.section-header {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Improved footer presentation */
+.footer {
+    background: linear-gradient(135deg, var(--primary-blue), #003a5f);
+    position: relative;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-yellow), transparent);
+}
 }
