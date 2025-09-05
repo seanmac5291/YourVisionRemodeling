@@ -13,7 +13,7 @@ function initializeWebsite() {
     initializeScrollAnimations();
     initializeTestimonialCarousel();
     initializeContactForm();
-    initializeFloatingElements();
+    // Removed floating elements initialization
     initializeExitIntent();
     initializeSmoothScroll();
     initializeChatbot();

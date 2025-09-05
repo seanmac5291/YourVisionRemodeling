@@ -284,11 +284,15 @@ a {
     z-index: -1;
 }
 
+/* Hero content and buttons centering */
 .hero-content {
     text-align: center;
     color: var(--text-light);
     max-width: 800px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .hero-title {
@@ -308,6 +312,7 @@ a {
     gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 /* ===== SERVICES SECTION ===== */

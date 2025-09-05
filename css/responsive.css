@@ -340,6 +340,12 @@
         text-align: center;
     }
     
+    /* Center social media icons in mobile view */
+    .social-links {
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
     .footer-bottom-content {
         flex-direction: column;
         gap: 1rem;
