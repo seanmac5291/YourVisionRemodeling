@@ -39,7 +39,7 @@
         "@context": "https://schema.org",
         "@type": "RoofingContractor",
         "name": "Your Vision Roofing",
-        "image": "https://yourvisionroofing.com/images/logo.png",
+        "image": "https://yourvisionroofing.com/yvr_scraped_simple/assets/images/Final-logo.png",
         "telephone": "1-800-297-9878",
         "address": {
             "@type": "PostalAddress",
@@ -67,19 +67,22 @@
     </script>
 </head>
 <body>
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <!-- Loading Animation -->
     <div id="loading-screen">
         <div class="loading-content">
             <div class="loading-logo">
-                <i class="fas fa-home" style="color: var(--primary-yellow); font-size: 3rem;"></i>
+                <i class="fas fa-home" style="color: var(--primary-yellow); font-size: 3rem;" aria-hidden="true"></i>
             </div>
-            <div class="loading-spinner"></div>
+            <div class="loading-spinner" role="status" aria-label="Loading"></div>
             <p>Loading Your Vision...</p>
         </div>
     </div>
 
     <!-- Header -->
-    <header id="header" class="header">
+    <header id="header" class="header" role="banner">
         <!-- Top Contact Bar -->
         <div class="top-bar">
             <div class="container">
@@ -89,11 +92,11 @@
                     </div>
                     <div class="top-bar-right">
                         <a href="tel:1-800-297-9878" class="top-contact">
-                            <i class="fas fa-phone"></i>
+                            <i class="fas fa-phone" aria-hidden="true"></i>
                             1-800-297-9878
                         </a>
                         <a href="#contact" class="top-contact">
-                            <i class="fas fa-envelope"></i>
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
                             Email Us
                         </a>
                     </div>
@@ -102,54 +105,44 @@
         </div>
 
         <!-- Main Navigation -->
-        <nav class="main-nav">
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
             <div class="container">
                 <div class="nav-content">
                     <!-- Logo -->
                     <div class="logo">
-                        <svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-                            <!-- House icon -->
-                            <path d="M20 35 L30 25 L40 35 L40 45 L20 45 Z" fill="#FCB927"/>
-                            <path d="M25 30 L35 30 L35 40 L25 40 Z" fill="#004A76"/>
-                            <rect x="27" y="32" width="2" height="2" fill="#FCB927"/>
-                            <rect x="31" y="32" width="2" height="2" fill="#FCB927"/>
-                            <!-- Swoosh -->
-                            <path d="M45 25 Q60 20 75 25 Q90 30 105 25" stroke="#FCB927" stroke-width="3" fill="none"/>
-                            <path d="M45 30 Q60 25 75 30 Q90 35 105 30" stroke="#004A76" stroke-width="2" fill="none"/>
-                            <!-- Text -->
-                            <text x="50" y="20" font-family="Montserrat, Arial, sans-serif" font-size="12" font-weight="700" fill="#004A76">Your Vision</text>
-                            <text x="50" y="45" font-family="Montserrat, Arial, sans-serif" font-size="10" font-weight="600" fill="#FCB927">ROOFING</text>
-                        </svg>
+                        <img src="yvr_scraped_simple/assets/images/Final-logo.png" alt="Your Vision Roofing Logo" width="200" height="60">
                     </div>
 
                     <!-- Desktop Navigation -->
-                    <ul class="nav-menu" id="nav-menu">
-                        <li><a href="#services">Roofing</a></li>
-                        <li><a href="#services">Windows</a></li>
-                        <li><a href="#services">Gutters</a></li>
-                        <li><a href="#services">Siding</a></li>
-                        <li><a href="#services">Painting</a></li>
-                        <li><a href="#services">Carpentry</a></li>
-                        <li><a href="#services">Interior Remodeling</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
+                    <ul class="nav-menu" id="nav-menu" role="menubar">
+                        <li role="none"><a href="#services" role="menuitem">Roofing</a></li>
+                        <li role="none"><a href="#services" role="menuitem">Windows</a></li>
+                        <li role="none"><a href="#services" role="menuitem">Gutters</a></li>
+                        <li role="none"><a href="#services" role="menuitem">Siding</a></li>
+                        <li role="none"><a href="#services" role="menuitem">Painting</a></li>
+                        <li role="none"><a href="#services" role="menuitem">Carpentry</a></li>
+                        <li role="none"><a href="#services" role="menuitem">Interior Remodeling</a></li>
+                        <li role="none"><a href="#about" role="menuitem">About Us</a></li>
+                        <li role="none"><a href="#contact" role="menuitem">Contact Us</a></li>
                     </ul>
 
                     <!-- Mobile Menu Toggle -->
-                    <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" 
+                            aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation menu">
                         <span></span>
                         <span></span>
                         <span></span>
-                    </div>
+                    </button>
                 </div>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="hero">
+    <main id="main-content">
+    <section id="hero" class="hero" role="banner">
         <div class="hero-overlay"></div>
-        <div class="hero-background"></div>
+        <div class="hero-background" role="img" aria-label="Completed roofing project background"></div>
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">Professional Roofing & Home Improvement Services</h1>
@@ -170,9 +163,9 @@
                 <p class="section-subtitle">Comprehensive home improvement solutions with quality craftsmanship</p>
             </div>
 
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
+            <div class="services-grid" role="list">
+                <div class="service-card" role="listitem">
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-home"></i>
                     </div>
                     <h3 class="service-title">Roofing</h3>
@@ -180,8 +173,8 @@
                     <a href="#contact" class="service-link">Learn More</a>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" role="listitem">
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-window-restore"></i>
                     </div>
                     <h3 class="service-title">Windows</h3>
@@ -189,8 +182,8 @@
                     <a href="#contact" class="service-link">Learn More</a>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" role="listitem">
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-tint"></i>
                     </div>
                     <h3 class="service-title">Gutters</h3>
@@ -198,8 +191,8 @@
                     <a href="#contact" class="service-link">Learn More</a>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" role="listitem">
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-building"></i>
                     </div>
                     <h3 class="service-title">Siding</h3>
@@ -207,8 +200,8 @@
                     <a href="#contact" class="service-link">Learn More</a>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" role="listitem">
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-paint-roller"></i>
                     </div>
                     <h3 class="service-title">Painting</h3>
@@ -216,8 +209,8 @@
                     <a href="#contact" class="service-link">Learn More</a>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" role="listitem">
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-hammer"></i>
                     </div>
                     <h3 class="service-title">Carpentry</h3>
@@ -225,8 +218,8 @@
                     <a href="#contact" class="service-link">Learn More</a>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" role="listitem">
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-couch"></i>
                     </div>
                     <h3 class="service-title">Interior Remodeling</h3>
@@ -415,32 +408,43 @@
             <div class="contact-content">
                 <div class="contact-form-container">
                     <h2 class="section-title">Get Your Free Estimate</h2>
-                    <form id="contact-form" class="contact-form">
+                    <form id="contact-form" class="contact-form" role="form" aria-labelledby="contact-form-title">
                         <div class="form-row">
                             <div class="form-group">
-                                <input type="text" id="first-name" name="firstName" placeholder="First Name" required>
+                                <label for="first-name" class="sr-only">First Name</label>
+                                <input type="text" id="first-name" name="firstName" placeholder="First Name" required 
+                                       aria-describedby="first-name-error" autocomplete="given-name">
                             </div>
                             <div class="form-group">
-                                <input type="text" id="last-name" name="lastName" placeholder="Last Name" required>
+                                <label for="last-name" class="sr-only">Last Name</label>
+                                <input type="text" id="last-name" name="lastName" placeholder="Last Name" required 
+                                       aria-describedby="last-name-error" autocomplete="family-name">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                                <label for="phone" class="sr-only">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="Phone Number" required 
+                                       aria-describedby="phone-error" autocomplete="tel">
                             </div>
                             <div class="form-group">
-                                <input type="email" id="email" name="email" placeholder="Email Address" required>
+                                <label for="email" class="sr-only">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="Email Address" required 
+                                       aria-describedby="email-error" autocomplete="email">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" id="address" name="address" placeholder="Street Address" required>
+                            <label for="address" class="sr-only">Street Address</label>
+                            <input type="text" id="address" name="address" placeholder="Street Address" required 
+                                   aria-describedby="address-error" autocomplete="street-address">
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <select id="state" name="state" required>
+                                <label for="state" class="sr-only">State</label>
+                                <select id="state" name="state" required aria-describedby="state-error" autocomplete="address-level1">
                                     <option value="">Select State</option>
                                     <option value="Maryland">Maryland</option>
                                     <option value="Virginia">Virginia</option>
@@ -448,15 +452,20 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="city" name="city" placeholder="City" required>
+                                <label for="city" class="sr-only">City</label>
+                                <input type="text" id="city" name="city" placeholder="City" required 
+                                       aria-describedby="city-error" autocomplete="address-level2">
                             </div>
                             <div class="form-group">
-                                <input type="text" id="zip" name="zip" placeholder="Zip Code" required>
+                                <label for="zip" class="sr-only">Zip Code</label>
+                                <input type="text" id="zip" name="zip" placeholder="Zip Code" required 
+                                       aria-describedby="zip-error" autocomplete="postal-code" pattern="[0-9]{5}(-[0-9]{4})?">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <select id="hear-about" name="hearAbout">
+                            <label for="hear-about" class="sr-only">How did you hear about us?</label>
+                            <select id="hear-about" name="hearAbout" aria-describedby="hear-about-description">
                                 <option value="">How did you hear about us?</option>
                                 <option value="Referral">Referral</option>
                                 <option value="Social Media">Social Media</option>
@@ -467,10 +476,16 @@
                         </div>
 
                         <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Tell us about your project..." rows="5"></textarea>
+                            <label for="message" class="sr-only">Project Description</label>
+                            <textarea id="message" name="message" placeholder="Tell us about your project..." rows="5" 
+                                      aria-describedby="message-description"></textarea>
+                            <div id="message-description" class="sr-only">Provide details about your roofing or home improvement project</div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-full">Get Your Free Estimate</button>
+                        <button type="submit" class="btn btn-primary btn-full" aria-describedby="submit-description">
+                            Get Your Free Estimate
+                        </button>
+                        <div id="submit-description" class="sr-only">Submit form to receive your free estimate</div>
                     </form>
                 </div>
 
@@ -519,19 +534,7 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <div class="footer-logo">
-                        <svg width="150" height="45" viewBox="0 0 150 45" xmlns="http://www.w3.org/2000/svg">
-                            <!-- House icon -->
-                            <path d="M15 26.25 L22.5 18.75 L30 26.25 L30 33.75 L15 33.75 Z" fill="#FCB927"/>
-                            <path d="M18.75 22.5 L26.25 22.5 L26.25 30 L18.75 30 Z" fill="#004A76"/>
-                            <rect x="20.25" y="24" width="1.5" height="1.5" fill="#FCB927"/>
-                            <rect x="23.25" y="24" width="1.5" height="1.5" fill="#FCB927"/>
-                            <!-- Swoosh -->
-                            <path d="M33.75 18.75 Q45 15 56.25 18.75 Q67.5 22.5 78.75 18.75" stroke="#FCB927" stroke-width="2.25" fill="none"/>
-                            <path d="M33.75 22.5 Q45 18.75 56.25 22.5 Q67.5 26.25 78.75 22.5" stroke="#004A76" stroke-width="1.5" fill="none"/>
-                            <!-- Text -->
-                            <text x="37.5" y="15" font-family="Montserrat, Arial, sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">Your Vision</text>
-                            <text x="37.5" y="33.75" font-family="Montserrat, Arial, sans-serif" font-size="7.5" font-weight="600" fill="#FCB927">ROOFING</text>
-                        </svg>
+                        <img src="yvr_scraped_simple/assets/images/Final-logo-yellow.png" alt="Your Vision Roofing Logo" width="150" height="45">
                     </div>
                     <p class="footer-description">
                         Professional roofing and home improvement services in Northern Virginia, 
@@ -580,6 +583,24 @@
                         <p><strong>Licensed & Insured</strong></p>
                         <p>VA: 2705180039</p>
                         <p>MHIC: 163621</p>
+                        
+                        <!-- Certification Logos -->
+                        <div class="certification-logos">
+                            <div class="logo-grid">
+                                <div class="cert-logo-item">
+                                    <img src="Assets/Images/logo5.png" alt="BBB Accredited Business" class="cert-logo">
+                                </div>
+                                <div class="cert-logo-item">
+                                    <img src="Assets/Images/logo6.png" alt="Angi Certification" class="cert-logo">
+                                </div>
+                                <div class="cert-logo-item">
+                                    <img src="Assets/Images/logo7.png" alt="Home Advisor Certification" class="cert-logo">
+                                </div>
+                                <div class="cert-logo-item">
+                                    <img src="Assets/Images/gaf-logo-foo-1.png" alt="GAF Master Elite Contractor" class="cert-logo">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -587,7 +608,7 @@
             <div class="footer-bottom">
                 <div class="footer-bottom-content">
                     <p>&copy; 2024 Your Vision Roofing. All rights reserved.</p>
-                    <p class="website-credit">Website designed & managed by <a href="#" target="_blank">Cogo Interactive</a></p>
+                    <p class="website-credit">Website designed & managed by <a href="#" target="_blank">YO MAMA</a></p>
                 </div>
             </div>
         </div>
@@ -599,27 +620,6 @@
             <i class="fas fa-phone"></i>
             Call Now
         </a>
-    </div>
-
-    <!-- Social Proof Widget -->
-    <div id="social-proof" class="social-proof">
-        <div class="social-proof-content">
-            <div class="social-proof-item">
-                <i class="fas fa-users"></i>
-                <span>100+ Happy Customers</span>
-            </div>
-            <div class="social-proof-item">
-                <i class="fas fa-star"></i>
-                <span>5-Star Google Reviews</span>
-            </div>
-            <div class="social-proof-item">
-                <svg width="60" height="30" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="60" height="30" fill="#004A76"/>
-                    <text x="30" y="10" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#FCB927">BBB</text>
-                    <text x="30" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" fill="#FCB927">ACCREDITED</text>
-                </svg>
-            </div>
-        </div>
     </div>
 
     <!-- Exit Intent Popup -->

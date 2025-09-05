@@ -12,6 +12,13 @@
     --shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.2);
     --border-radius: 8px;
     --transition: all 0.3s ease;
+    
+    /* Improved contrast colors */
+    --text-dark-high-contrast: #1a1a1a;
+    --gray-medium-readable: #5a5a5a;
+    --focus-color: #0066cc;
+    --error-color: #d93025;
+    --success-color: #137333;
 }
 
 /* ===== RESET & BASE STYLES ===== */
@@ -294,22 +301,11 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-yellow) 100%);
-    background-image: 
-        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%),
-        linear-gradient(45deg, transparent 40%, rgba(252,185,39,0.1) 50%, transparent 60%);
+    background-image: url('../yvr_scraped_simple/assets/images/yvr-completed-banner.png');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     z-index: -2;
-}
-
-.about-image-placeholder {
-    width: 100%;
-    height: auto;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-medium);
-    overflow: hidden;
 }
 
 .hero-overlay {
@@ -318,7 +314,7 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 74, 118, 0.7);
+    background: linear-gradient(135deg, rgba(0, 74, 118, 0.8) 0%, rgba(0, 74, 118, 0.6) 50%, rgba(252, 185, 39, 0.3) 100%);
     z-index: -1;
 }
 
@@ -573,7 +569,6 @@ a {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-top: 2rem;
 }
 
 .dot {
@@ -745,6 +740,66 @@ a {
     border-top: 1px solid #333;
 }
 
+.certification-logos {
+    margin-top: 1.5rem;
+}
+
+.logo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+    justify-items: center;
+}
+
+.cert-logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    min-height: 60px;
+    width: 100%;
+}
+
+.cert-logo-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.cert-logo {
+    height: 45px;
+    width: auto;
+    max-width: 90px;
+    object-fit: contain;
+    filter: brightness(1.2) contrast(1.1);
+    transition: var(--transition);
+}
+
+.cert-logo:hover {
+    filter: brightness(1.4) contrast(1.2);
+    transform: scale(1.05);
+}
+
+/* Responsive adjustments for certification logos */
+@media (max-width: 768px) {
+    .logo-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .cert-logo-item {
+        min-height: 50px;
+    }
+    
+    .cert-logo {
+        height: 35px;
+        max-width: 70px;
+    }
+}
+
 .footer-bottom {
     border-top: 1px solid #333;
     padding-top: 20px;
@@ -793,45 +848,6 @@ a {
 .floating-call-btn a:hover {
     background-color: #e5a623;
     transform: scale(1.05);
-}
-
-.social-proof {
-    position: fixed;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-    background-color: var(--text-light);
-    padding: 1rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-medium);
-    z-index: 998;
-    opacity: 0;
-    transform: translateX(-100px) translateY(-50%);
-    transition: var(--transition);
-}
-
-.social-proof.show {
-    opacity: 1;
-    transform: translateX(0) translateY(-50%);
-}
-
-.social-proof-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-}
-
-.social-proof-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--text-dark);
-}
-
-.social-proof-item i {
-    color: var(--primary-yellow);
 }
 
 /* ===== EXIT POPUP ===== */
@@ -888,6 +904,49 @@ a {
 .exit-popup p {
     margin-bottom: 2rem;
     color: var(--gray-medium);
+}
+
+/* ===== IMPROVED ACCESSIBILITY ===== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus states for better keyboard navigation */
+*:focus-visible {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.btn:focus-visible {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 2px;
+}
+
+/* Skip to content link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background-color: var(--primary-blue);
+    color: var(--text-light);
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 10000;
+    font-weight: 600;
+}
+
+.skip-link:focus {
+    top: 6px;
 }
 
 /* ===== ANIMATIONS ===== */

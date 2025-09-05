@@ -54,26 +54,92 @@ function initializeMobileMenu() {
     const mobileToggle = document.getElementById('mobile-menu-toggle');
     const navMenu = document.getElementById('nav-menu');
     
+    if (!mobileToggle || !navMenu) return;
+    
+    // Set initial ARIA attributes
+    mobileToggle.setAttribute('aria-expanded', 'false');
+    
     mobileToggle.addEventListener('click', () => {
+        const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+        
+        // Toggle classes and ARIA attributes
         mobileToggle.classList.toggle('active');
         navMenu.classList.toggle('active');
+        mobileToggle.setAttribute('aria-expanded', !isExpanded);
+        
+        // Trap focus when menu is open
+        if (!isExpanded) {
+            trapFocus(navMenu);
+        } else {
+            removeFocusTrap();
+        }
     });
     
     // Close menu when clicking on a link
     navMenu.addEventListener('click', (e) => {
         if (e.target.tagName === 'A') {
-            mobileToggle.classList.remove('active');
-            navMenu.classList.remove('active');
+            closeMenu();
         }
     });
     
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
         if (!mobileToggle.contains(e.target) && !navMenu.contains(e.target)) {
-            mobileToggle.classList.remove('active');
-            navMenu.classList.remove('active');
+            closeMenu();
         }
     });
+    
+    // Close menu on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            closeMenu();
+            mobileToggle.focus(); // Return focus to toggle button
+        }
+    });
+    
+    function closeMenu() {
+        mobileToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        removeFocusTrap();
+    }
+    
+    function trapFocus(element) {
+        const focusableElements = element.querySelectorAll(
+            'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstFocusable = focusableElements[0];
+        const lastFocusable = focusableElements[focusableElements.length - 1];
+        
+        if (firstFocusable) firstFocusable.focus();
+        
+        element.addEventListener('keydown', handleFocusTrap);
+        
+        function handleFocusTrap(e) {
+            if (e.key === 'Tab') {
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusable) {
+                        e.preventDefault();
+                        lastFocusable.focus();
+                    }
+                } else {
+                    if (document.activeElement === lastFocusable) {
+                        e.preventDefault();
+                        firstFocusable.focus();
+                    }
+                }
+            }
+        }
+        
+        element._focusTrapHandler = handleFocusTrap;
+    }
+    
+    function removeFocusTrap() {
+        if (navMenu._focusTrapHandler) {
+            navMenu.removeEventListener('keydown', navMenu._focusTrapHandler);
+            delete navMenu._focusTrapHandler;
+        }
+    }
 }
 
 // ===== SMOOTH SCROLL ===== 
@@ -270,7 +336,6 @@ function initializeContactForm() {
 // ===== FLOATING ELEMENTS ===== 
 function initializeFloatingElements() {
     const floatingCallBtn = document.getElementById('floating-call-btn');
-    const socialProof = document.getElementById('social-proof');
     
     window.addEventListener('scroll', () => {
         const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
@@ -280,13 +345,6 @@ function initializeFloatingElements() {
             floatingCallBtn.classList.add('show');
         } else {
             floatingCallBtn.classList.remove('show');
-        }
-        
-        // Show social proof after 25% scroll
-        if (scrollPercent > 25 && window.innerWidth > 767) {
-            socialProof.classList.add('show');
-        } else {
-            socialProof.classList.remove('show');
         }
     });
 }
@@ -408,8 +466,8 @@ function initializeLazyLoading() {
 // Preload critical resources
 function preloadCriticalResources() {
     const criticalImages = [
-        'images/logo.png',
-        'images/hero-background.jpg'
+        'yvr_scraped_simple/assets/images/Final-logo.png',
+        'yvr_scraped_simple/assets/images/yvr-completed-banner.png'
     ];
     
     criticalImages.forEach(src => {
