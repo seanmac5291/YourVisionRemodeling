@@ -1,0 +1,594 @@
+// ===== MAIN JAVASCRIPT ===== 
+
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeWebsite();
+});
+
+// ===== INITIALIZE WEBSITE ===== 
+function initializeWebsite() {
+    hideLoadingScreen();
+    initializeHeader();
+    initializeMobileMenu();
+    initializeScrollAnimations();
+    initializeTestimonialCarousel();
+    initializeContactForm();
+    initializeFloatingElements();
+    initializeExitIntent();
+    initializeSmoothScroll();
+}
+
+// ===== LOADING SCREEN ===== 
+function hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loading-screen');
+    
+    setTimeout(() => {
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 500);
+    }, 1500);
+}
+
+// ===== HEADER FUNCTIONALITY ===== 
+function initializeHeader() {
+    const header = document.getElementById('header');
+    let lastScrollY = window.scrollY;
+    
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        
+        // Add scrolled class for styling
+        if (currentScrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScrollY = currentScrollY;
+    });
+}
+
+// ===== MOBILE MENU ===== 
+function initializeMobileMenu() {
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    mobileToggle.addEventListener('click', () => {
+        mobileToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on a link
+    navMenu.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') {
+            mobileToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!mobileToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            mobileToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    });
+}
+
+// ===== SMOOTH SCROLL ===== 
+function initializeSmoothScroll() {
+    const links = document.querySelectorAll('a[href^="#"]');
+    
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const headerHeight = document.getElementById('header').offsetHeight;
+                const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// ===== SCROLL ANIMATIONS ===== 
+function initializeScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    const animatedElements = document.querySelectorAll('.service-card, .feature-box, .about-content, .testimonial-slide');
+    animatedElements.forEach(el => {
+        el.classList.add('reveal');
+        observer.observe(el);
+    });
+}
+
+// ===== TESTIMONIAL CAROUSEL ===== 
+function initializeTestimonialCarousel() {
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    
+    function showSlide(index) {
+        // Hide all slides
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        // Show current slide
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+    }
+    
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    // Add click event to dots
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentSlide = index;
+            showSlide(currentSlide);
+        });
+    });
+    
+    // Auto-advance carousel
+    setInterval(nextSlide, 5000);
+    
+    // Initialize first slide
+    showSlide(0);
+}
+
+// ===== CONTACT FORM ===== 
+function initializeContactForm() {
+    const form = document.getElementById('contact-form');
+    const phoneInput = document.getElementById('phone');
+    
+    // Phone number formatting
+    phoneInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 6) {
+            value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+        } else if (value.length >= 3) {
+            value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+        }
+        e.target.value = value;
+    });
+    
+    // Form validation and submission
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        if (validateForm()) {
+            showSuccessMessage();
+            form.reset();
+        }
+    });
+    
+    function validateForm() {
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            const value = field.value.trim();
+            
+            // Remove previous error styling
+            field.classList.remove('error');
+            
+            // Check if field is empty
+            if (!value) {
+                field.classList.add('error');
+                isValid = false;
+                return;
+            }
+            
+            // Validate email
+            if (field.type === 'email' && !isValidEmail(value)) {
+                field.classList.add('error');
+                isValid = false;
+                return;
+            }
+            
+            // Validate phone
+            if (field.type === 'tel' && !isValidPhone(value)) {
+                field.classList.add('error');
+                isValid = false;
+                return;
+            }
+        });
+        
+        if (!isValid) {
+            showErrorMessage('Please fill in all required fields correctly.');
+        }
+        
+        return isValid;
+    }
+    
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    function isValidPhone(phone) {
+        const phoneRegex = /^\(\d{3}\)\s\d{3}-\d{4}$/;
+        return phoneRegex.test(phone);
+    }
+    
+    function showSuccessMessage() {
+        const message = document.createElement('div');
+        message.className = 'success-message';
+        message.innerHTML = `
+            <div class="success-content">
+                <i class="fas fa-check-circle"></i>
+                <h3>Thank You!</h3>
+                <p>Your message has been sent successfully. We'll contact you soon!</p>
+            </div>
+        `;
+        document.body.appendChild(message);
+        
+        setTimeout(() => {
+            message.remove();
+        }, 5000);
+    }
+    
+    function showErrorMessage(text) {
+        const message = document.createElement('div');
+        message.className = 'error-message';
+        message.innerHTML = `
+            <div class="error-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>${text}</p>
+            </div>
+        `;
+        document.body.appendChild(message);
+        
+        setTimeout(() => {
+            message.remove();
+        }, 5000);
+    }
+}
+
+// ===== FLOATING ELEMENTS ===== 
+function initializeFloatingElements() {
+    const floatingCallBtn = document.getElementById('floating-call-btn');
+    const socialProof = document.getElementById('social-proof');
+    
+    window.addEventListener('scroll', () => {
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        
+        // Show floating call button after 50% scroll
+        if (scrollPercent > 50 && window.innerWidth <= 767) {
+            floatingCallBtn.classList.add('show');
+        } else {
+            floatingCallBtn.classList.remove('show');
+        }
+        
+        // Show social proof after 25% scroll
+        if (scrollPercent > 25 && window.innerWidth > 767) {
+            socialProof.classList.add('show');
+        } else {
+            socialProof.classList.remove('show');
+        }
+    });
+}
+
+// ===== EXIT INTENT POPUP ===== 
+function initializeExitIntent() {
+    const exitPopup = document.getElementById('exit-popup');
+    const closeBtn = document.querySelector('.exit-popup-close');
+    let hasShownPopup = false;
+    
+    // Show popup on mouse leave (desktop only)
+    if (window.innerWidth > 767) {
+        document.addEventListener('mouseleave', (e) => {
+            if (e.clientY <= 0 && !hasShownPopup) {
+                showExitPopup();
+            }
+        });
+    }
+    
+    // Show popup after 30 seconds on mobile
+    if (window.innerWidth <= 767) {
+        setTimeout(() => {
+            if (!hasShownPopup) {
+                showExitPopup();
+            }
+        }, 30000);
+    }
+    
+    function showExitPopup() {
+        exitPopup.classList.add('show');
+        hasShownPopup = true;
+        
+        // Hide popup after 10 seconds
+        setTimeout(() => {
+            hideExitPopup();
+        }, 10000);
+    }
+    
+    function hideExitPopup() {
+        exitPopup.classList.remove('show');
+    }
+    
+    // Close popup events
+    closeBtn.addEventListener('click', hideExitPopup);
+    exitPopup.addEventListener('click', (e) => {
+        if (e.target === exitPopup) {
+            hideExitPopup();
+        }
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            hideExitPopup();
+        }
+    });
+}
+
+// ===== UTILITY FUNCTIONS ===== 
+
+// Debounce function for scroll events
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Throttle function for scroll events
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+// Check if element is in viewport
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+// ===== PERFORMANCE OPTIMIZATIONS ===== 
+
+// Lazy load images
+function initializeLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// Preload critical resources
+function preloadCriticalResources() {
+    const criticalImages = [
+        'images/logo.png',
+        'images/hero-background.jpg'
+    ];
+    
+    criticalImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+}
+
+// ===== ACCESSIBILITY IMPROVEMENTS ===== 
+
+// Handle keyboard navigation
+function initializeKeyboardNavigation() {
+    const focusableElements = document.querySelectorAll(
+        'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+    );
+    
+    focusableElements.forEach(element => {
+        element.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (element.tagName === 'A' || element.tagName === 'BUTTON') {
+                    element.click();
+                }
+            }
+        });
+    });
+}
+
+// Announce page changes to screen readers
+function announceToScreenReader(message) {
+    const announcement = document.createElement('div');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.setAttribute('aria-atomic', 'true');
+    announcement.classList.add('sr-only');
+    announcement.textContent = message;
+    
+    document.body.appendChild(announcement);
+    
+    setTimeout(() => {
+        document.body.removeChild(announcement);
+    }, 1000);
+}
+
+// ===== ERROR HANDLING ===== 
+
+// Global error handler
+window.addEventListener('error', (e) => {
+    console.error('JavaScript error:', e.error);
+    // You could send error reports to your analytics service here
+});
+
+// Handle unhandled promise rejections
+window.addEventListener('unhandledrejection', (e) => {
+    console.error('Unhandled promise rejection:', e.reason);
+    e.preventDefault();
+});
+
+// ===== ANALYTICS AND TRACKING ===== 
+
+// Track user interactions
+function trackEvent(category, action, label) {
+    // Google Analytics 4 event tracking
+    if (typeof gtag !== 'undefined') {
+        gtag('event', action, {
+            event_category: category,
+            event_label: label
+        });
+    }
+    
+    // You can also send events to other analytics services here
+}
+
+// Track form submissions
+function trackFormSubmission(formName) {
+    trackEvent('Form', 'Submit', formName);
+}
+
+// Track phone calls
+function trackPhoneCall() {
+    trackEvent('Contact', 'Phone Call', 'Header Phone');
+}
+
+// ===== ADDITIONAL STYLES FOR DYNAMIC ELEMENTS ===== 
+
+// Add styles for success/error messages
+const dynamicStyles = document.createElement('style');
+dynamicStyles.textContent = `
+    .success-message, .error-message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 10000;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        animation: slideInRight 0.3s ease;
+        max-width: 400px;
+    }
+    
+    .success-message {
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+    }
+    
+    .error-message {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+    }
+    
+    .success-content, .error-content {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .success-content i {
+        color: #28a745;
+        font-size: 1.2rem;
+    }
+    
+    .error-content i {
+        color: #dc3545;
+        font-size: 1.2rem;
+    }
+    
+    .form-group input.error,
+    .form-group select.error,
+    .form-group textarea.error {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+    
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+    
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @media (max-width: 767px) {
+        .success-message, .error-message {
+            top: 10px;
+            right: 10px;
+            left: 10px;
+            max-width: none;
+        }
+    }
+`;
+
+document.head.appendChild(dynamicStyles);
+
+// Initialize keyboard navigation and lazy loading when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    initializeKeyboardNavigation();
+    initializeLazyLoading();
+    preloadCriticalResources();
+});
+
+// Add phone call tracking to phone links
+document.addEventListener('DOMContentLoaded', () => {
+    const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+    phoneLinks.forEach(link => {
+        link.addEventListener('click', trackPhoneCall);
+    });
+});

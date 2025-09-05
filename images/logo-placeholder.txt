@@ -1,0 +1,1 @@
+Logo placeholder files will be created using CSS/SVG
