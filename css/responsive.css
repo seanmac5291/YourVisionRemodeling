@@ -429,8 +429,24 @@
         padding: 1.5rem 0.5rem;
     }
     
+    /* Improved exit popup on small mobile */
     .exit-popup-content {
-        padding: 1.5rem 1rem;
+        padding: 2rem 1.5rem;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .exit-popup-content h3 {
+        font-size: 1.3rem;
+    }
+    
+    .exit-popup-content p {
+        font-size: 0.95rem;
+    }
+    
+    .exit-popup-content .btn {
+        width: 100%;
+        margin-top: 0.5rem;
     }
     
     .social-proof {

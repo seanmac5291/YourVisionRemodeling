@@ -721,7 +721,7 @@ a {
 
 .testimonials .section-subtitle {
     font-size: 1.3rem;
-    color: var(--gray-dark-readable) !important; /* Better contrast than pure black */
+    color: var (--gray-dark-readable) !important; /* Better contrast than pure black */
     max-width: 600px;
     margin: 0 auto 4rem;
     font-weight: 600;
@@ -1593,7 +1593,7 @@ a {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .chatbot {
-        bottom: 80px;
+        bottom: 90px;
         right: 15px;
     }
     
@@ -1612,15 +1612,15 @@ a {
 @media (max-width: 480px) {
     .chatbot {
         right: 10px;
-        left: 10px;
         bottom: 80px;
+        left: auto;
     }
     
     .chatbot-container {
-        width: 100%;
-        max-width: calc(100vw - 20px);
-        right: 0;
-        left: 0;
+        width: calc(100vw - 20px);
+        max-width: 350px;
+        right: 10px;
+        left: auto;
         height: 400px;
     }
     
@@ -1644,6 +1644,7 @@ a {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+    padding: 20px;
 }
 
 .exit-popup.show {
@@ -1655,17 +1656,14 @@ a {
     background-color: var(--text-light);
     border-radius: var(--border-radius);
     max-width: 500px;
-    width: 90%;
+    width: 100%;
     padding: 3rem;
     position: relative;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     text-align: center;
     transform: translateY(-20px);
     transition: transform 0.3s ease;
-}
-
-.exit-popup.show .exit-popup-content {
-    transform: translateY(0);
+    margin: 0 auto;
 }
 
 .exit-popup-close {
