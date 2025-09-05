@@ -240,13 +240,35 @@ function initializeContactForm() {
         e.target.value = value;
     });
     
+    // Add touch tracking for all form fields
+    const formFields = form.querySelectorAll('input, select, textarea');
+    formFields.forEach(field => {
+        field.addEventListener('blur', () => {
+            field.classList.add('touched');
+        });
+        
+        field.addEventListener('focus', () => {
+            // Remove error class when user starts typing again
+            field.classList.remove('error');
+        });
+    });
+    
     // Form validation and submission
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         
+        // Add submitted class to enable validation styling
+        form.classList.add('submitted');
+        
         if (validateForm()) {
             showSuccessMessage();
             form.reset();
+            // Remove submitted class after successful submission
+            form.classList.remove('submitted');
+            // Remove touched classes from all fields
+            formFields.forEach(field => {
+                field.classList.remove('touched');
+            });
         }
     });
     
