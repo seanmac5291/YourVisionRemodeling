@@ -16,6 +16,7 @@ function initializeWebsite() {
     initializeFloatingElements();
     initializeExitIntent();
     initializeSmoothScroll();
+    initializeChatbot();
 }
 
 // ===== LOADING SCREEN ===== 
@@ -421,6 +422,236 @@ function initializeExitIntent() {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             hideExitPopup();
+        }
+    });
+}
+
+// ===== CHATBOT FUNCTIONALITY ===== 
+function initializeChatbot() {
+    const chatbot = document.getElementById('chatbot');
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotContainer = document.getElementById('chatbot-container');
+    const chatClose = document.getElementById('chat-close');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+    const chatMessages = document.getElementById('chatbot-messages');
+    const quickActions = document.querySelectorAll('.quick-action');
+    const chatNotification = document.getElementById('chat-notification');
+    
+    let isOpen = false;
+    let messageCount = 1; // Start with 1 for the welcome message
+    
+    // Toggle chatbot
+    chatbotToggle.addEventListener('click', toggleChatbot);
+    chatClose.addEventListener('click', closeChatbot);
+    
+    // Input handling
+    chatInput.addEventListener('input', handleInputChange);
+    chatInput.addEventListener('keypress', handleKeyPress);
+    chatSend.addEventListener('click', sendMessage);
+    
+    // Quick actions
+    quickActions.forEach(action => {
+        action.addEventListener('click', () => {
+            const message = action.dataset.message;
+            sendUserMessage(message);
+        });
+    });
+    
+    // Auto-show notification after 5 seconds
+    setTimeout(() => {
+        if (!isOpen) {
+            chatNotification.style.display = 'flex';
+            chatbotToggle.style.animation = 'chatbotPulse 1s infinite';
+        }
+    }, 5000);
+    
+    function toggleChatbot() {
+        if (isOpen) {
+            closeChatbot();
+        } else {
+            openChatbot();
+        }
+    }
+    
+    function openChatbot() {
+        chatbotContainer.classList.add('active');
+        isOpen = true;
+        chatNotification.style.display = 'none';
+        chatbotToggle.style.animation = '';
+        chatInput.focus();
+        
+        // Track chatbot open
+        trackEvent('Chatbot', 'Open', 'Toggle Button');
+    }
+    
+    function closeChatbot() {
+        chatbotContainer.classList.remove('active');
+        isOpen = false;
+        
+        // Track chatbot close
+        trackEvent('Chatbot', 'Close', 'Close Button');
+    }
+    
+    function handleInputChange() {
+        const hasText = chatInput.value.trim().length > 0;
+        chatSend.disabled = !hasText;
+    }
+    
+    function handleKeyPress(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            if (!chatSend.disabled) {
+                sendMessage();
+            }
+        }
+    }
+    
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+        
+        sendUserMessage(message);
+        chatInput.value = '';
+        chatSend.disabled = true;
+    }
+    
+    function sendUserMessage(message) {
+        // Add user message to chat
+        addMessage(message, 'user');
+        
+        // Show typing indicator
+        showTypingIndicator();
+        
+        // Simulate bot response after delay
+        setTimeout(() => {
+            hideTypingIndicator();
+            const botResponse = generateBotResponse(message);
+            addMessage(botResponse, 'bot');
+        }, 1000 + Math.random() * 1000); // 1-2 second delay
+        
+        // Track message
+        trackEvent('Chatbot', 'Message Sent', 'User Message');
+    }
+    
+    function addMessage(text, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${type}-message`;
+        
+        const avatar = document.createElement('div');
+        avatar.className = 'message-avatar';
+        avatar.innerHTML = type === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+        
+        const content = document.createElement('div');
+        content.className = 'message-content';
+        
+        const messageParagraph = document.createElement('p');
+        messageParagraph.textContent = text;
+        
+        const time = document.createElement('span');
+        time.className = 'message-time';
+        time.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        content.appendChild(messageParagraph);
+        content.appendChild(time);
+        
+        messageDiv.appendChild(avatar);
+        messageDiv.appendChild(content);
+        
+        chatMessages.appendChild(messageDiv);
+        
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+        messageCount++;
+    }
+    
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message bot-message typing-message';
+        typingDiv.innerHTML = `
+            <div class="message-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        `;
+        
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    function hideTypingIndicator() {
+        const typingMessage = chatMessages.querySelector('.typing-message');
+        if (typingMessage) {
+            typingMessage.remove();
+        }
+    }
+    
+    function generateBotResponse(userMessage) {
+        const message = userMessage.toLowerCase();
+        
+        // Response patterns
+        if (message.includes('estimate') || message.includes('quote') || message.includes('price')) {
+            return "I'd be happy to help you get a free estimate! You can fill out our contact form on this page, or call us directly at 1-800-297-9878. What type of project are you considering?";
+        }
+        
+        if (message.includes('roofing') || message.includes('roof')) {
+            return "We specialize in all types of roofing services including repairs, replacements, and storm damage assessment. We're licensed and insured with quality materials and warranties. Would you like to schedule an inspection?";
+        }
+        
+        if (message.includes('emergency') || message.includes('urgent') || message.includes('leak')) {
+            return "We offer 24/7 emergency roofing services! For immediate assistance, please call us at 1-800-297-9878. Our team can respond quickly to urgent situations like roof leaks or storm damage.";
+        }
+        
+        if (message.includes('services') || message.includes('what do you')) {
+            return "We offer comprehensive home improvement services including roofing, windows, gutters, siding, painting, carpentry, and interior remodeling. We serve Northern Virginia, DC, and Maryland. What specific service interests you?";
+        }
+        
+        if (message.includes('area') || message.includes('location') || message.includes('where')) {
+            return "We proudly serve Northern Virginia, Washington DC, and Maryland. We're a family-owned business operating since 2020 with proper licensing (VA: 2705180039, MHIC: 163621). Are you located in our service area?";
+        }
+        
+        if (message.includes('licensed') || message.includes('insured') || message.includes('license')) {
+            return "Yes, we're fully licensed and insured! Our licenses are VA: 2705180039 and MHIC: 163621. We also maintain comprehensive insurance coverage to protect both our workers and your property.";
+        }
+        
+        if (message.includes('contact') || message.includes('phone') || message.includes('call')) {
+            return "You can reach us at 1-800-297-9878 or email info@yvrroofing.com. We're available 24/7 for emergencies and typically respond to estimates within 24 hours. What's the best way to contact you?";
+        }
+        
+        if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+            return "Hello! Welcome to Your Vision Roofing. I'm here to help answer questions about our roofing and home improvement services. How can I assist you today?";
+        }
+        
+        if (message.includes('thank') || message.includes('thanks')) {
+            return "You're very welcome! Is there anything else I can help you with regarding our roofing or home improvement services?";
+        }
+        
+        if (message.includes('cost') || message.includes('how much') || message.includes('expensive')) {
+            return "Costs vary depending on the scope and materials of your project. We offer free, no-obligation estimates to provide accurate pricing. Would you like to schedule an estimate or learn more about a specific service?";
+        }
+        
+        // Default response
+        return "Thanks for your question! For detailed information about our services, I'd recommend speaking with one of our specialists. You can call us at 1-800-297-9878 or fill out our contact form for a free estimate. How else can I help you today?";
+    }
+    
+    // Close chatbot when clicking outside
+    document.addEventListener('click', (e) => {
+        if (isOpen && !chatbot.contains(e.target)) {
+            closeChatbot();
+        }
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) {
+            closeChatbot();
         }
     });
 }
