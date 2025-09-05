@@ -517,6 +517,94 @@ a {
     opacity: 0.9;
 }
 
+/* ===== BRANDS SECTION ===== */
+.brands {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    overflow: hidden;
+}
+
+.brands .section-title {
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+    font-weight: 800;
+    font-size: 3rem;
+}
+
+.brands .section-subtitle {
+    font-size: 1.3rem;
+    color: var(--gray-dark-readable);
+    max-width: 600px;
+    margin: 0 auto 4rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.brands-carousel {
+    position: relative;
+    overflow: hidden;
+    mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+    -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+}
+
+.brands-track {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    animation: brandScroll 30s linear infinite;
+    width: calc(8 * (150px + 4rem)); /* Calculate width based on number of items */
+    min-width: 200%;
+}
+
+.brand-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: var(--transition);
+    min-width: 150px;
+    height: 80px;
+    border: 1px solid rgba(0, 74, 118, 0.1);
+}
+
+.brand-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 74, 118, 0.15);
+    border-color: var(--primary-yellow);
+}
+
+.brand-logo {
+    max-height: 50px;
+    max-width: 120px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: none; /* Remove grayscale - show full color */
+    transition: var(--transition);
+}
+
+.brand-item:hover .brand-logo {
+    transform: scale(1.1);
+}
+
+@keyframes brandScroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause animation on hover */
+.brands-carousel:hover .brands-track {
+    animation-play-state: paused;
+}
+
 /* ===== ABOUT SECTION ===== */
 .about {
     padding: 80px 0;
@@ -1170,7 +1258,7 @@ a {
 
 .floating-call-btn a {
     background-color: var(--primary-yellow);
-    color: var(--text-dark);
+    color: var (--text-dark);
     padding: 15px 20px;
     border-radius: 50px;
     font-weight: 600;
