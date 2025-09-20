@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Expert roofing services in Northern Virginia, DC, and Maryland. Your Vision Remodeling & Roofing offers quality roof repair, replacement, and installation.">
-    <meta name="keywords" content="roofing contractor, roof repair, roof replacement, northern virginia, dc, maryland">
-    <meta name="author" content="Your Vision Remodeling & Roofing">
+    <meta name="description" content="Expert roofing services in Northern Virginia, DC, and Maryland. Professional roof repair, replacement, and storm damage assessment with quality materials and warranties.">
+    <meta name="keywords" content="roofing contractor, roof repair, roof replacement, storm damage, Northern Virginia, DC, Maryland, roofing services">
+    <meta name="author" content="Your Vision Roofing">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourvisionremodeling.com/roofing.html">
-    <meta property="og:title" content="Expert Roofing Services | Your Vision Remodeling & Roofing">
-    <meta property="og:description" content="Trusted roofing contractor for repairs and replacements in VA, DC, & MD. We use cutting-edge materials for lasting durability.">
-    <meta property="og:image" content="https://yourvisionremodeling.com/Assets/Images/roofing-service-hero.jpg">
+    <meta property="og:url" content="https://yourvisionroofing.com/roofing.html">
+    <meta property="og:title" content="Professional Roofing Services | Your Vision Roofing | VA, DC, MD">
+    <meta property="og:description" content="Expert roofing services in Northern Virginia, DC, and Maryland. Professional roof repair, replacement, and storm damage assessment with quality materials and warranties.">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://yourvisionremodeling.com/roofing.html">
-    <meta property="twitter:title" content="Expert Roofing Services | Your Vision Remodeling & Roofing">
-    <meta property="twitter:description" content="Trusted roofing contractor for repairs and replacements in VA, DC, & MD. We use cutting-edge materials for lasting durability.">
-    <meta property="twitter:image" content="https://yourvisionremodeling.com/Assets/Images/roofing-service-hero.jpg">
+    <meta property="twitter:url" content="https://yourvisionroofing.com/roofing.html">
+    <meta property="twitter:title" content="Professional Roofing Services | Your Vision Roofing | VA, DC, MD">
+    <meta property="twitter:description" content="Expert roofing services in Northern Virginia, DC, and Maryland. Professional roof repair, replacement, and storm damage assessment with quality materials and warranties.">
     
-    <title>Expert Roofing Services | Northern VA, DC, MD | Your Vision Remodeling</title>
+    <title>Professional Roofing Services | Your Vision Roofing | VA, DC, MD</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,11 +32,53 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/service-page.css">
+    
+    <!-- Schema Markup for Roofing Service -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Roofing",
+        "provider": {
+            "@type": "RoofingContractor",
+            "name": "Your Vision Roofing",
+            "image": "https://yourvisionroofing.com/Assets/Images/Final-logo.png",
+            "telephone": "1-800-297-9878",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Northern Virginia",
+                "addressRegion": "VA",
+                "addressCountry": "US"
+            },
+            "areaServed": [
+                "Northern Virginia",
+                "Washington DC",
+                "Maryland"
+            ]
+        },
+        "description": "Expert roof repair, replacement, and storm damage assessment with quality materials and warranties.",
+        "offers": {
+            "@type": "Offer",
+            "availability": "http://schema.org/InStock",
+            "priceRange": "$$"
+        }
+    }
+    </script>
 </head>
 <body>
     <!-- Skip to content link for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Loading Animation -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-home" style="color: var(--primary-yellow); font-size: 3rem;" aria-hidden="true"></i>
+            </div>
+            <div class="loading-spinner" role="status" aria-label="Loading"></div>
+            <p>Loading Your Vision...</p>
+        </div>
+    </div>
 
     <!-- Header -->
     <header id="header" class="header" role="banner">
@@ -49,7 +89,9 @@
                     <div class="top-bar-left">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="index.html"><img src="Assets/Images/Final-logo.png" alt="Your Vision Roofing Logo" width="200" height="60"></a>
+                            <a href="index.html">
+                                <img src="Assets/Images/Final-logo.png" alt="Your Vision Roofing Logo" width="200" height="60">
+                            </a>
                         </div>
                     </div>
                     <div class="top-bar-right">
@@ -57,7 +99,7 @@
                             <i class="fas fa-phone" aria-hidden="true"></i>
                             1-800-297-9878
                         </a>
-                        <a href="contact.html" class="top-contact">
+                        <a href="index.html#contact" class="top-contact">
                             <i class="fas fa-envelope" aria-hidden="true"></i>
                             Email Us
                         </a>
@@ -72,13 +114,13 @@
                 <div class="nav-content">
                     <!-- Desktop Navigation -->
                     <ul class="nav-menu" id="nav-menu" role="menubar">
-                        <li role="none"><a href="roofing.html" role="menuitem">Roofing</a></li>
+                        <li role="none"><a href="roofing.html" role="menuitem" class="active">Roofing</a></li>
                         <li role="none"><a href="windows.html" role="menuitem">Windows</a></li>
                         <li role="none"><a href="gutters.html" role="menuitem">Gutters</a></li>
                         <li role="none"><a href="siding.html" role="menuitem">Siding</a></li>
                         <li role="none"><a href="painting.html" role="menuitem">Painting</a></li>
                         <li role="none"><a href="carpentry.html" role="menuitem">Carpentry</a></li>
-                        <li role="none"><a href="remodeling.html" role="menuitem">Interior Remodeling</a></li>
+                        <li role="none"><a href="interior-remodeling.html" role="menuitem">Interior Remodeling</a></li>
                         <li role="none"><a href="index.html#about" role="menuitem">About Us</a></li>
                         <li role="none"><a href="index.html#contact" role="menuitem">Contact Us</a></li>
                     </ul>
@@ -95,45 +137,133 @@
         </nav>
     </header>
 
+    <!-- Main Content -->
     <main id="main-content">
         <!-- Service Hero Section -->
         <section class="service-hero">
-            <div class="service-hero-background" style="background-image: url('Assets/Images/yvr-completed-banner.png');"></div>
-            <div class="service-hero-overlay"></div>
+            <div class="hero-overlay"></div>
+            <div class="service-hero-background"></div>
             <div class="container">
-                <h1 class="service-hero-title">Expert Roofing Services</h1>
-            </div>
-        </section>
-
-        <!-- Service Content Section -->
-        <section class="service-content-area">
-            <div class="container">
-                <div class="service-layout">
-                    <div class="service-description-content">
-                        <h2>Your Local Roofing & Exterior Expert</h2>
-                        <p>
-                            Your Vision Roofing is your local roofing & exterior expert. As a trusted choice, we prioritize quality, using cutting-edge materials for lasting durability. Whether it's repairs or a full replacement, we bring dedication and transparency to every project.
-                        </p>
-                        <p>
-                            With Your Vision Roofing, you're not just getting a roof – you're investing in a home shielded for the long haul. Our commitment to excellence ensures that every nail, shingle, and flashing is perfectly placed for maximum protection against the elements.
-                        </p>
-                        <p class="highlight">
-                            Your vision, our commitment!
-                        </p>
+                <div class="service-hero-content">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
                     </div>
-                    <aside class="service-image-container">
-                        <img src="Assets/Images/roofing-service-image.jpg" alt="High-quality residential roofing installation">
-                    </aside>
+                    <h1 class="service-hero-title">Professional Roofing Services</h1>
+                    <p class="service-hero-subtitle">Expert roof repair, replacement, and storm damage assessment with quality materials and warranties</p>
+                    <div class="hero-buttons">
+                        <a href="index.html#contact" class="btn btn-primary">Get Free Estimate</a>
+                        <a href="tel:1-800-297-9878" class="btn btn-outline">Call Now: 1-800-297-9878</a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Call to Action Section -->
+        <!-- Service Details Section -->
+        <section class="service-details">
+            <div class="container">
+                <div class="service-content">
+                    <div class="service-intro">
+                        <h2 class="section-title">Complete Roofing Solutions</h2>
+                        <p class="service-description">
+                            At Your Vision Roofing, we provide comprehensive roofing services throughout Northern Virginia, 
+                            Washington DC, and Maryland. With years of experience and a commitment to excellence, we deliver 
+                            superior roofing solutions that protect your home and enhance its value.
+                        </p>
+                    </div>
+
+                    <!-- Service Features Grid -->
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h3>Roof Repair</h3>
+                            <p>Fast, reliable repairs for leaks, damaged shingles, and storm damage. We identify and fix issues before they become major problems.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h3>Roof Replacement</h3>
+                            <p>Complete roof replacement using premium materials and expert installation techniques for long-lasting protection.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-cloud-rain"></i>
+                            </div>
+                            <h3>Storm Damage Assessment</h3>
+                            <p>Professional storm damage inspections and insurance claim assistance to restore your roof quickly and efficiently.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Warranty Protection</h3>
+                            <p>Comprehensive warranties on all materials and workmanship, giving you peace of mind for years to come.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="service-process">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Roofing Process</h2>
+                    <p class="section-subtitle">Professional, transparent, and reliable from start to finish</p>
+                </div>
+
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Free Inspection & Estimate</h3>
+                            <p>We provide a thorough roof inspection and detailed estimate at no cost to you.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Material Selection</h3>
+                            <p>Choose from premium roofing materials that match your style, budget, and performance needs.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Professional Installation</h3>
+                            <p>Our certified team completes the work with precision, safety, and minimal disruption to your daily life.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Quality Assurance</h3>
+                            <p>Final inspection and cleanup ensure your complete satisfaction with the finished project.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
         <section class="service-cta">
             <div class="container">
-                <h2>Ready for a Better Roof?</h2>
-                <p>Contact Your Vision Roofing today for a free, no-obligation estimate. Let's build a roof that protects your home and enhances its value for years to come.</p>
-                <a href="index.html#contact" class="btn btn-primary">Get Your Free Estimate</a>
+                <div class="cta-content">
+                    <h2>Ready to Protect Your Home?</h2>
+                    <p>Get your free roofing estimate today and discover why homeowners throughout Northern Virginia, DC, and Maryland trust Your Vision Roofing.</p>
+                    <div class="cta-buttons">
+                        <a href="index.html#contact" class="btn btn-primary">Get Free Estimate</a>
+                        <a href="tel:1-800-297-9878" class="btn btn-outline">Call: 1-800-297-9878</a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -167,7 +297,7 @@
                         <li><a href="siding.html">Siding</a></li>
                         <li><a href="painting.html">Painting</a></li>
                         <li><a href="carpentry.html">Carpentry</a></li>
-                        <li><a href="remodeling.html">Interior Remodeling</a></li>
+                        <li><a href="interior-remodeling.html">Interior Remodeling</a></li>
                     </ul>
                 </div>
 
@@ -188,19 +318,22 @@
                         <li>Northern Virginia</li>
                         <li>Washington DC</li>
                         <li>Maryland</li>
+                        <li>Fairfax County</li>
+                        <li>Montgomery County</li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <div class="footer-bottom-content">
-                    <p>&copy; 2024 Your Vision Remodeling & Roofing. All rights reserved.</p>
+                    <p>&copy; 2024 Your Vision Roofing. All rights reserved.</p>
                     <p class="website-credit">Website designed & managed by <a href="#" target="_blank">YO MAMA</a></p>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- JavaScript -->
     <script src="js/main.js"></script>
 </body>
 </html>

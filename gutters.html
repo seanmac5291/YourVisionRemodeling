@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional gutter installation, repair, and cleaning in Northern Virginia, DC, and Maryland. Protect your home from water damage with our expert services.">
-    <meta name="keywords" content="gutter installation, gutter repair, gutter cleaning, seamless gutters, northern virginia, dc, maryland">
-    <meta name="author" content="Your Vision Remodeling & Roofing">
+    <meta name="description" content="Professional gutter installation, repair, and maintenance services in Northern Virginia, DC, and Maryland. Protect your home from water damage with expert gutter solutions.">
+    <meta name="keywords" content="gutters, Northern Virginia, DC, Maryland, home improvement contractor">
+    <meta name="author" content="Your Vision Roofing">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourvisionremodeling.com/gutters.html">
-    <meta property="og:title" content="Gutter Installation & Repair | Your Vision Remodeling">
-    <meta property="og:description" content="Professional gutter services in VA, DC, & MD. Protect your home from water damage with expert installation and repair.">
-    <meta property="og:image" content="https://yourvisionremodeling.com/Assets/Images/gutters-service-hero.jpg">
+    <meta property="og:url" content="https://yourvisionroofing.com/gutters.html">
+    <meta property="og:title" content="Gutter Installation & Repair | Your Vision Roofing | VA, DC, MD">
+    <meta property="og:description" content="Professional gutter installation, repair, and maintenance services in Northern Virginia, DC, and Maryland. Protect your home from water damage with expert gutter solutions.">
     
-    <title>Gutter Installation & Repair | Your Vision Remodeling</title>
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourvisionroofing.com/gutters.html">
+    <meta property="twitter:title" content="Gutter Installation & Repair | Your Vision Roofing | VA, DC, MD">
+    <meta property="twitter:description" content="Professional gutter installation, repair, and maintenance services in Northern Virginia, DC, and Maryland. Protect your home from water damage with expert gutter solutions.">
+    
+    <title>Gutter Installation & Repair | Your Vision Roofing | VA, DC, MD</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,11 +32,53 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/service-page.css">
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Gutter Services",
+        "provider": {
+            "@type": "HomeImprovementContractor",
+            "name": "Your Vision Roofing",
+            "image": "https://yourvisionroofing.com/Assets/Images/Final-logo.png",
+            "telephone": "1-800-297-9878",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Northern Virginia",
+                "addressRegion": "VA",
+                "addressCountry": "US"
+            },
+            "areaServed": [
+                "Northern Virginia",
+                "Washington DC",
+                "Maryland"
+            ]
+        },
+        "description": "Gutter installation, repair, and maintenance to protect your home from water damage",
+        "offers": {
+            "@type": "Offer",
+            "availability": "http://schema.org/InStock",
+            "priceRange": "3421"
+        }
+    }
+    </script>
 </head>
 <body>
     <!-- Skip to content link for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Loading Animation -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-home" style="color: var(--primary-yellow); font-size: 3rem;" aria-hidden="true"></i>
+            </div>
+            <div class="loading-spinner" role="status" aria-label="Loading"></div>
+            <p>Loading Your Vision...</p>
+        </div>
+    </div>
 
     <!-- Header -->
     <header id="header" class="header" role="banner">
@@ -42,7 +89,9 @@
                     <div class="top-bar-left">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="index.html"><img src="Assets/Images/Final-logo.png" alt="Your Vision Roofing Logo" width="200" height="60"></a>
+                            <a href="index.html">
+                                <img src="Assets/Images/Final-logo.png" alt="Your Vision Roofing Logo" width="200" height="60">
+                            </a>
                         </div>
                     </div>
                     <div class="top-bar-right">
@@ -67,11 +116,11 @@
                     <ul class="nav-menu" id="nav-menu" role="menubar">
                         <li role="none"><a href="roofing.html" role="menuitem">Roofing</a></li>
                         <li role="none"><a href="windows.html" role="menuitem">Windows</a></li>
-                        <li role="none"><a href="gutters.html" role="menuitem" class="current">Gutters</a></li>
+                        <li role="none"><a href="gutters.html" role="menuitem" class="active">Gutters</a></li>
                         <li role="none"><a href="siding.html" role="menuitem">Siding</a></li>
                         <li role="none"><a href="painting.html" role="menuitem">Painting</a></li>
                         <li role="none"><a href="carpentry.html" role="menuitem">Carpentry</a></li>
-                        <li role="none"><a href="remodeling.html" role="menuitem">Interior Remodeling</a></li>
+                        <li role="none"><a href="interior-remodeling.html" role="menuitem">Interior Remodeling</a></li>
                         <li role="none"><a href="index.html#about" role="menuitem">About Us</a></li>
                         <li role="none"><a href="index.html#contact" role="menuitem">Contact Us</a></li>
                     </ul>
@@ -88,45 +137,89 @@
         </nav>
     </header>
 
+    <!-- Main Content -->
     <main id="main-content">
         <!-- Service Hero Section -->
         <section class="service-hero">
-            <div class="service-hero-background" style="background-image: url('Assets/Images/yvr-completed-banner.png');"></div>
-            <div class="service-hero-overlay"></div>
+            <div class="hero-overlay"></div>
+            <div class="service-hero-background"></div>
             <div class="container">
-                <h1 class="service-hero-title">Reliable Gutter Solutions</h1>
-            </div>
-        </section>
-
-        <!-- Service Content Section -->
-        <section class="service-content-area">
-            <div class="container">
-                <div class="service-layout">
-                    <div class="service-description-content">
-                        <h2>Protect Your Home with a Flawless Gutter System</h2>
-                        <p>
-                            A properly functioning gutter system is your home's first line of defense against water damage. We provide comprehensive gutter services, including seamless gutter installation, repairs, and routine cleaning to ensure your home is protected year-round.
-                        </p>
-                        <p>
-                            Our team uses durable materials and precise installation techniques to create a gutter system that not only functions perfectly but also complements your home's exterior. Don't let clogged or damaged gutters compromise your foundation.
-                        </p>
-                        <p class="highlight">
-                            Your vision for a safe and protected home is our commitment.
-                        </p>
+                <div class="service-hero-content">
+                    <div class="service-icon">
+                        <i class="fas fa-tint"></i>
                     </div>
-                    <aside class="service-image-container">
-                        <img src="Assets/Images/yvr-completed-banner.png" alt="Seamless gutter system installed on a residential house">
-                    </aside>
+                    <h1 class="service-hero-title">Gutter Installation & Repair</h1>
+                    <p class="service-hero-subtitle">Gutter installation, repair, and maintenance to protect your home from water damage</p>
+                    <div class="hero-buttons">
+                        <a href="index.html#contact" class="btn btn-primary">Get Free Estimate</a>
+                        <a href="tel:1-800-297-9878" class="btn btn-outline">Call Now: 1-800-297-9878</a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Call to Action Section -->
+        <!-- Service Details Section -->
+        <section class="service-details">
+            <div class="container">
+                <div class="service-content">
+                    <div class="service-intro">
+                        <h2 class="section-title">Professional Gutter Services</h2>
+                        <p class="service-description">
+                            At Your Vision Roofing, we provide comprehensive gutters services throughout Northern Virginia, 
+                            Washington DC, and Maryland. With years of experience and a commitment to excellence, we deliver 
+                            superior solutions that enhance your home's value and functionality.
+                        </p>
+                    </div>
+
+                    <!-- Service Features Grid -->
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h3>Expert Installation</h3>
+                            <p>Professional installation using quality materials and proven techniques for lasting results.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Warranty Protection</h3>
+                            <p>Comprehensive warranties on materials and workmanship for your peace of mind.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>Licensed Professionals</h3>
+                            <p>Certified and experienced team dedicated to delivering exceptional results.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h3>Quality Materials</h3>
+                            <p>Premium materials from trusted manufacturers for durability and performance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
         <section class="service-cta">
             <div class="container">
-                <h2>Keep Water Where It Belongs</h2>
-                <p>Ensure your home is protected from the elements. Contact us for a free estimate on our professional gutter services today.</p>
-                <a href="index.html#contact" class="btn btn-primary">Get a Free Gutter Estimate</a>
+                <div class="cta-content">
+                    <h2>Ready to Get Started?</h2>
+                    <p>Contact Your Vision Roofing today for professional gutters services in Northern Virginia, DC, and Maryland.</p>
+                    <div class="cta-buttons">
+                        <a href="index.html#contact" class="btn btn-primary">Get Free Estimate</a>
+                        <a href="tel:1-800-297-9878" class="btn btn-outline">Call: 1-800-297-9878</a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -160,7 +253,7 @@
                         <li><a href="siding.html">Siding</a></li>
                         <li><a href="painting.html">Painting</a></li>
                         <li><a href="carpentry.html">Carpentry</a></li>
-                        <li><a href="remodeling.html">Interior Remodeling</a></li>
+                        <li><a href="interior-remodeling.html">Interior Remodeling</a></li>
                     </ul>
                 </div>
 
@@ -181,19 +274,22 @@
                         <li>Northern Virginia</li>
                         <li>Washington DC</li>
                         <li>Maryland</li>
+                        <li>Fairfax County</li>
+                        <li>Montgomery County</li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <div class="footer-bottom-content">
-                    <p>&copy; 2024 Your Vision Remodeling & Roofing. All rights reserved.</p>
+                    <p>&copy; 2024 Your Vision Roofing. All rights reserved.</p>
                     <p class="website-credit">Website designed & managed by <a href="#" target="_blank">YO MAMA</a></p>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- JavaScript -->
     <script src="js/main.js"></script>
 </body>
 </html>
