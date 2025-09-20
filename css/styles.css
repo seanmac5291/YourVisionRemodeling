@@ -1890,7 +1890,7 @@ a {
 /* Service Process Section */
 .service-process {
     padding: 80px 0;
-    background-color: var(--gray-light);
+    background-color: white;
 }
 
 .process-timeline {
@@ -1903,12 +1903,17 @@ a {
 .process-step {
     text-align: center;
     position: relative;
+    transition: var(--transition);
+}
+
+.process-step:hover {
+    transform: translateY(-5px);
 }
 
 .step-number {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, var(--primary-blue), var(--primary-yellow));
+    background-color: var(--primary-blue);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1917,6 +1922,13 @@ a {
     font-size: 2rem;
     font-weight: 800;
     color: white;
+    transition: var(--transition);
+}
+
+.process-step:hover .step-number {
+    background-color: var(--primary-yellow);
+    color: var(--primary-blue);
+    transform: scale(1.1);
 }
 
 .step-content h3 {
