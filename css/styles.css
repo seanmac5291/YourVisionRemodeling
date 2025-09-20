@@ -251,6 +251,18 @@ a {
     gap: 2rem;
 }
 
+.nav-menu a {
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.nav-menu a:hover {
+    color: var(--primary-blue);
+}
+
 /* ===== HERO SECTION ===== */
 .hero {
     min-height: 600px;
@@ -1705,7 +1717,6 @@ a {
     position: relative;
     margin-top: 120px;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-yellow) 100%);
 }
 
 .service-hero-background {
@@ -1714,11 +1725,22 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
+    background-image: url('../Assets/Images/yvr-completed-banner.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.1;
-    z-index: 1;
+    z-index: -2;
+}
+
+.service-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 74, 118, 0.8);
+    z-index: -1;
 }
 
 .service-hero-content {
@@ -1728,23 +1750,24 @@ a {
     color: white;
     max-width: 800px;
     margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .service-hero .service-icon {
-    width: 100px;
-    height: 100px;
-    background-color: rgba(255, 255, 255, 0.2);
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary-yellow);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 2rem;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    border: 3px solid rgba(252, 185, 39, 0.3);
 }
 
 .service-hero .service-icon i {
-    font-size: 3rem;
-    color: white;
+    font-size: 2.5rem;
+    color: var(--primary-blue);
 }
 
 .service-hero-title {
@@ -1753,11 +1776,12 @@ a {
     font-weight: 800;
     margin-bottom: 1rem;
     line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .service-hero-subtitle {
     font-size: 1.4rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     opacity: 0.95;
     line-height: 1.5;
 }
@@ -1967,7 +1991,7 @@ a {
 /* Service CTA Section */
 .service-cta {
     padding: 80px 0;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-yellow) 100%);
+    background-color: var(--primary-blue);
     color: white;
     text-align: center;
 }
