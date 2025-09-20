@@ -4,6 +4,7 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeWebsite();
+    initializeThankYouPopup();
 });
 
 // ===== INITIALIZE WEBSITE ===== 
@@ -356,33 +357,61 @@ function initializeExitIntent() {
     const exitPopup = document.getElementById('exit-popup');
     const closeBtn = document.querySelector('.exit-popup-close');
     let hasShownPopup = false;
+    let userEngaged = false;
+    const minTimeOnPage = 10000; // Minimum 10 seconds on page before showing popup
+    const pageLoadTime = Date.now();
     
-    // Show popup on mouse leave (desktop only)
+    if (!exitPopup || !closeBtn) return;
+    
+    // Track user engagement
+    function trackEngagement() {
+        userEngaged = true;
+    }
+    
+    // Add engagement tracking
+    document.addEventListener('scroll', trackEngagement, { once: true });
+    document.addEventListener('mouseenter', trackEngagement, { once: true });
+    document.addEventListener('click', trackEngagement, { once: true });
+    
+    // Show popup on mouse leave (desktop only) - but only if user has been engaged
     if (window.innerWidth > 767) {
         document.addEventListener('mouseleave', (e) => {
-            if (e.clientY <= 0 && !hasShownPopup) {
+            const timeOnPage = Date.now() - pageLoadTime;
+            
+            // Only show if:
+            // 1. Mouse leaves from top of viewport (actually leaving page)
+            // 2. User has been on page for minimum time
+            // 3. User has engaged with the page
+            // 4. Haven't shown popup already
+            if (e.clientY <= 0 && 
+                !hasShownPopup && 
+                userEngaged && 
+                timeOnPage >= minTimeOnPage) {
                 showExitPopup();
             }
         });
     }
     
-    // Show popup after 30 seconds on mobile
+    // Show popup after longer time on mobile (only if engaged)
     if (window.innerWidth <= 767) {
         setTimeout(() => {
-            if (!hasShownPopup) {
+            const timeOnPage = Date.now() - pageLoadTime;
+            if (!hasShownPopup && userEngaged && timeOnPage >= 60000) { // 60 seconds minimum on mobile
                 showExitPopup();
             }
-        }, 30000);
+        }, 60000); // Check after 60 seconds
     }
     
     function showExitPopup() {
         exitPopup.classList.add('show');
         hasShownPopup = true;
         
-        // Hide popup after 10 seconds
+        // Hide popup after 15 seconds if no interaction
         setTimeout(() => {
-            hideExitPopup();
-        }, 10000);
+            if (exitPopup.classList.contains('show')) {
+                hideExitPopup();
+            }
+        }, 15000);
     }
     
     function hideExitPopup() {
@@ -399,8 +428,45 @@ function initializeExitIntent() {
     
     // Close on escape key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
+        if (e.key === 'Escape' && exitPopup.classList.contains('show')) {
             hideExitPopup();
+        }
+    });
+}
+
+// ===== THANK YOU POPUP ===== 
+function initializeThankYouPopup() {
+    const popup = document.getElementById('thank-you-popup');
+    const closeBtn = document.querySelector('.thank-you-close');
+    
+    if (!popup) return;
+    
+    // Show popup automatically after page loads
+    setTimeout(() => {
+        popup.classList.add('show');
+    }, 500);
+    
+    // Close popup functionality
+    function closePopup() {
+        popup.classList.remove('show');
+    }
+    
+    // Close on button click
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closePopup);
+    }
+    
+    // Close on overlay click
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            closePopup();
+        }
+    });
+    
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && popup.classList.contains('show')) {
+            closePopup();
         }
     });
 }

@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional roofing, windows, gutters, siding, painting, carpentry & interior remodeling services in Northern Virginia, Washington DC & Maryland. Licensed contractors serving Fairfax, Loudoun, Arlington, Prince William counties. Free estimates.">
+    <meta name="description" content="Thank you for scheduling your estimate with Your Vision Roofing. We'll contact you within 24 hours to confirm your appointment.">
     <meta name="keywords" content="roofing contractor, window installation, gutter repair, siding installation, painting services, carpentry, interior remodeling, Northern Virginia, Fairfax County, Loudoun County, Arlington, Alexandria, Washington DC, Montgomery County Maryland, home improvement contractor">
     <meta name="author" content="Your Vision Roofing">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourvisionroofing.com/">
-    <meta property="og:title" content="Your Vision Roofing | Professional Roofing & Remodeling | VA, DC, MD">
-    <meta property="og:description" content="Professional roofing services in Northern Virginia, DC, and Maryland. Expert installation of roofing, windows, gutters, siding, plus painting, carpentry, and interior remodeling.">
+    <meta property="og:url" content="https://yourvisionroofing.com/thank-you.html">
+    <meta property="og:title" content="Thank You - Your Vision Roofing | Professional Roofing & Remodeling | VA, DC, MD">
+    <meta property="og:description" content="Thank you for scheduling your estimate with Your Vision Roofing. We'll contact you within 24 hours to confirm your appointment.">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://yourvisionroofing.com/">
-    <meta property="twitter:title" content="Your Vision Roofing | Professional Roofing & Remodeling | VA, DC, MD">
-    <meta property="twitter:description" content="Professional roofing services in Northern Virginia, DC, and Maryland. Expert installation of roofing, windows, gutters, siding, plus painting, carpentry, and interior remodeling.">
+    <meta property="twitter:url" content="https://yourvisionroofing.com/thank-you.html">
+    <meta property="twitter:title" content="Thank You - Your Vision Roofing | Professional Roofing & Remodeling | VA, DC, MD">
+    <meta property="twitter:description" content="Thank you for scheduling your estimate with Your Vision Roofing. We'll contact you within 24 hours to confirm your appointment.">
     
-    <title>Your Vision Roofing | Professional Roofing & Remodeling | VA, DC, MD</title>
+    <title>Thank You - Your Vision Roofing | Professional Roofing & Remodeling | VA, DC, MD</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,6 +78,34 @@
             </div>
             <div class="loading-spinner" role="status" aria-label="Loading"></div>
             <p>Loading Your Vision...</p>
+        </div>
+    </div>
+
+    <!-- Thank You Popup -->
+    <div id="thank-you-popup" class="thank-you-popup">
+        <div class="thank-you-popup-content">
+            <div class="thank-you-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Thanks for Scheduling!</h3>
+            <p>We've received your appointment request and we'll be in touch within 24 hours to confirm your estimate appointment.</p>
+            
+            <div class="thank-you-info">
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Response time: Within 24 hours</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Questions? Call us: <a href="tel:1-800-297-9878">1-800-297-9878</a></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email: <a href="mailto:info@yvrroofing.com">info@yvrroofing.com</a></span>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary thank-you-close" onclick="closeThankYouPopup()">Continue</button>
         </div>
     </div>
 
@@ -311,15 +339,40 @@
     <section id="about" class="about">
         <div class="container">
             <div class="about-content">
-                <div class="about-image">
-                    <div class="about-image-placeholder">
-                        <svg width="500" height="400" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                <div class="about-visual">
+                    <div class="about-image">
+                        <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background -->
                             <rect width="500" height="400" fill="#f8f9fa"/>
-                            <rect x="0" y="0" width="500" height="200" fill="#004A76"/>
-                            <rect x="100" y="50" width="300" height="100" rx="10" fill="#FCB927"/>
-                            <circle cx="150" cy="100" r="30" fill="#004A76"/>
-                            <circle cx="350" cy="100" r="30" fill="#004A76"/>
-                            <rect x="200" y="85" width="100" height="30" rx="15" fill="#004A76"/>
+                            
+                            <!-- House silhouette -->
+                            <polygon points="100,300 250,150 400,300 400,350 350,350 350,250 150,250 150,350 100,350" fill="#004A76"/>
+                            
+                            <!-- Roof -->
+                            <polygon points="80,300 250,130 420,300 400,300 250,150 100,300" fill="#FCB927"/>
+                            
+                            <!-- Door -->
+                            <rect x="225" y="280" width="50" height="70" fill="#8B4513"/>
+                            
+                            <!-- Windows -->
+                            <rect x="160" y="270" width="40" height="40" fill="#87CEEB"/>
+                            <rect x="310" y="270" width="40" height="40" fill="#87CEEB"/>
+                            
+                            <!-- Team figures -->
+                            <circle cx="200" cy="320" r="15" fill="#FFE4B5"/>
+                            <rect x="195" y="335" width="10" height="25" fill="#004A76"/>
+                            
+                            <circle cx="300" cy="320" r="15" fill="#FFE4B5"/>
+                            <rect x="295" y="335" width="10" height="25" fill="#004A76"/>
+                            
+                            <!-- Tools -->
+                            <rect x="180" y="315" width="3" height="15" fill="#8B4513"/>
+                            <rect x="178" y="312" width="7" height="5" fill="#C0C0C0"/>
+                            
+                            <rect x="317" y="315" width="3" height="15" fill="#8B4513"/>
+                            <rect x="315" y="312" width="7" height="5" fill="#C0C0C0"/>
+                            
+                            <!-- Text -->
                             <text x="250" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#000000" font-weight="bold">Your Vision Roofing Team</text>
                             <text x="250" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#333333" font-weight="600">Professional • Reliable • Trusted</text>
                         </svg>
@@ -656,19 +709,36 @@
         </div>
     </footer>
 
-    <!-- Chatbot temporarily removed (was here) -->
-
-    <!-- Exit Intent Popup -->
-    <div id="exit-popup" class="exit-popup">
-        <div class="exit-popup-content">
-            <button class="exit-popup-close">&times;</button>
-            <h3>Wait! Don't Leave Without Your Free Estimate!</h3>
-            <p>Get a professional assessment of your roofing needs today.</p>
-            <a href="#contact" class="btn btn-primary">Get Free Estimate</a>
-        </div>
-    </div>
-
     <!-- JavaScript -->
     <script src="js/main.js"></script>
+    
+    <!-- Thank You Popup Script -->
+    <script>
+        function closeThankYouPopup() {
+            document.getElementById('thank-you-popup').classList.remove('show');
+        }
+        
+        // Show thank you popup when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for loading animation to complete
+            setTimeout(() => {
+                document.getElementById('thank-you-popup').classList.add('show');
+            }, 2000);
+        });
+        
+        // Close popup when clicking outside of it
+        document.getElementById('thank-you-popup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeThankYouPopup();
+            }
+        });
+        
+        // Close popup with escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('thank-you-popup').classList.contains('show')) {
+                closeThankYouPopup();
+            }
+        });
+    </script>
 </body>
 </html>

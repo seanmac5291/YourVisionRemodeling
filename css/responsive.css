@@ -462,6 +462,10 @@
     .social-proof-item {
         font-size: 0.75rem;
     }
+
+    .schedule-hero {
+        padding: 3rem 0;
+    }
 }
 
 /* ===== LANDSCAPE ORIENTATION ===== */
