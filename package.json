@@ -1,0 +1,27 @@
+{
+  "name": "yourvisionremodeling",
+  "version": "1.0.0",
+  "description": "Repo for website of yourvisionremodeling",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanmac5291/YourVisionRemodeling.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seanmac5291/YourVisionRemodeling/issues"
+  },
+  "homepage": "https://github.com/seanmac5291/YourVisionRemodeling#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.4.0"
+  }
+}

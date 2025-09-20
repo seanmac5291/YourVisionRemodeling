@@ -1,3 +1,4 @@
+/* global gtag */
 // ===== MAIN JAVASCRIPT ===== 
 
 // Wait for DOM to be fully loaded
@@ -16,7 +17,7 @@ function initializeWebsite() {
     // Removed floating elements initialization
     initializeExitIntent();
     initializeSmoothScroll();
-    initializeChatbot();
+    // initializeChatbot(); // Chatbot temporarily disabled
 }
 
 // ===== LOADING SCREEN ===== 
@@ -34,19 +35,13 @@ function hideLoadingScreen() {
 // ===== HEADER FUNCTIONALITY ===== 
 function initializeHeader() {
     const header = document.getElementById('header');
-    let lastScrollY = window.scrollY;
-    
     window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
-        
-        // Add scrolled class for styling
         if (currentScrollY > 100) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-        
-        lastScrollY = currentScrollY;
     });
 }
 
@@ -356,22 +351,6 @@ function initializeContactForm() {
     }
 }
 
-// ===== FLOATING ELEMENTS ===== 
-function initializeFloatingElements() {
-    const floatingCallBtn = document.getElementById('floating-call-btn');
-    
-    window.addEventListener('scroll', () => {
-        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        
-        // Show floating call button after 50% scroll
-        if (scrollPercent > 50 && window.innerWidth <= 767) {
-            floatingCallBtn.classList.add('show');
-        } else {
-            floatingCallBtn.classList.remove('show');
-        }
-    });
-}
-
 // ===== EXIT INTENT POPUP ===== 
 function initializeExitIntent() {
     const exitPopup = document.getElementById('exit-popup');
@@ -437,10 +416,8 @@ function initializeChatbot() {
     const chatMessages = document.getElementById('chatbot-messages');
     const quickActions = document.querySelectorAll('.quick-action');
     const chatNotification = document.getElementById('chat-notification');
-    
     let isOpen = false;
-    let messageCount = 1; // Start with 1 for the welcome message
-    
+
     // Toggle chatbot
     chatbotToggle.addEventListener('click', toggleChatbot);
     chatClose.addEventListener('click', closeChatbot);
@@ -562,8 +539,6 @@ function initializeChatbot() {
         
         // Scroll to bottom
         chatMessages.scrollTop = chatMessages.scrollHeight;
-        
-        messageCount++;
     }
     
     function showTypingIndicator() {
@@ -656,146 +631,25 @@ function initializeChatbot() {
     });
 }
 
-// ===== UTILITY FUNCTIONS ===== 
-
-// Debounce function for scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Throttle function for scroll events
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    }
-}
-
-// Check if element is in viewport
-function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
-
-// ===== PERFORMANCE OPTIMIZATIONS ===== 
-
-// Lazy load images
-function initializeLazyLoading() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-}
-
-// Preload critical resources
-function preloadCriticalResources() {
-    const criticalImages = [
-        'Assets/Images/Final-logo.png',
-        'Assets/Images/yvr-completed-banner.png'
-    ];
-    
-    criticalImages.forEach(src => {
-        const img = new Image();
-        img.src = src;
-    });
-}
-
-// ===== ACCESSIBILITY IMPROVEMENTS ===== 
-
-// Handle keyboard navigation
-function initializeKeyboardNavigation() {
-    const focusableElements = document.querySelectorAll(
-        'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
-    );
-    
-    focusableElements.forEach(element => {
-        element.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                if (element.tagName === 'A' || element.tagName === 'BUTTON') {
-                    element.click();
-                }
-            }
-        });
-    });
-}
-
-// Announce page changes to screen readers
-function announceToScreenReader(message) {
-    const announcement = document.createElement('div');
-    announcement.setAttribute('aria-live', 'polite');
-    announcement.setAttribute('aria-atomic', 'true');
-    announcement.classList.add('sr-only');
-    announcement.textContent = message;
-    
-    document.body.appendChild(announcement);
-    
-    setTimeout(() => {
-        document.body.removeChild(announcement);
-    }, 1000);
-}
-
-// ===== ERROR HANDLING ===== 
-
-// Global error handler
-window.addEventListener('error', (e) => {
-    console.error('JavaScript error:', e.error);
-    // You could send error reports to your analytics service here
-});
-
-// Handle unhandled promise rejections
-window.addEventListener('unhandledrejection', (e) => {
-    console.error('Unhandled promise rejection:', e.reason);
-    e.preventDefault();
-});
+// Expose for future manual use to avoid unused warning
+window.initializeChatbot = initializeChatbot;
 
 // ===== ANALYTICS AND TRACKING ===== 
 
 // Track user interactions
 function trackEvent(category, action, label) {
-    // Google Analytics 4 event tracking
     if (typeof gtag !== 'undefined') {
-        gtag('event', action, {
-            event_category: category,
-            event_label: label
-        });
+        gtag('event', action, { event_category: category, event_label: label });
     }
-    
-    // You can also send events to other analytics services here
 }
 
-// Track form submissions
-function trackFormSubmission(formName) {
-    trackEvent('Form', 'Submit', formName);
-}
+// Add phone call tracking to phone links
+document.addEventListener('DOMContentLoaded', () => {
+    const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+    phoneLinks.forEach(link => {
+        link.addEventListener('click', trackPhoneCall);
+    });
+});
 
 // Track phone calls
 function trackPhoneCall() {
@@ -889,17 +743,57 @@ dynamicStyles.textContent = `
 
 document.head.appendChild(dynamicStyles);
 
+// ===== RESTORED UTILITY INITIALIZERS (previously removed) =====
+function initializeLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    if (!images.length) return;
+    if (!('IntersectionObserver' in window)) {
+        images.forEach(img => {
+            if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                img.classList.remove('lazy');
+            }
+        });
+        return;
+    }
+    const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    img.removeAttribute('data-src');
+                }
+                obs.unobserve(img);
+            }
+        });
+    });
+    images.forEach(img => io.observe(img));
+}
+
+function preloadCriticalResources() {
+    ['Assets/Images/Final-logo.png','Assets/Images/yvr-completed-banner.png']
+        .forEach(src => { const img = new Image(); img.src = src; });
+}
+
+function initializeKeyboardNavigation() {
+    const focusable = document.querySelectorAll('a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])');
+    focusable.forEach(el => {
+        el.addEventListener('keydown', e => {
+            if ((e.key === 'Enter' || e.key === ' ') && (el.tagName === 'A' || el.tagName === 'BUTTON')) {
+                e.preventDefault();
+                el.click();
+            }
+        });
+    });
+}
+// ===== END RESTORED UTILITY INITIALIZERS =====
+
 // Initialize keyboard navigation and lazy loading when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     initializeKeyboardNavigation();
     initializeLazyLoading();
     preloadCriticalResources();
-});
-
-// Add phone call tracking to phone links
-document.addEventListener('DOMContentLoaded', () => {
-    const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
-    phoneLinks.forEach(link => {
-        link.addEventListener('click', trackPhoneCall);
-    });
 });

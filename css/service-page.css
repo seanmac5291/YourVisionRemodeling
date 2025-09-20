@@ -1,0 +1,214 @@
+/* ===== SERVICE PAGE STYLES ===== */
+
+/* ===== SERVICE HERO SECTION ===== */
+.service-hero {
+    min-height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 120px; /* Adjust for fixed header */
+    text-align: center;
+    color: var(--text-light);
+    padding: 4rem 20px;
+}
+
+.service-hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+}
+
+.service-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 74, 118, 0.85) 0%, rgba(0, 58, 94, 0.7) 100%);
+    z-index: -1;
+}
+
+.service-hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    margin: 0;
+}
+
+/* ===== SERVICE CONTENT SECTION ===== */
+.service-content-area {
+    padding: 80px 0;
+    background-color: #ffffff;
+}
+
+.service-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: flex-start;
+}
+
+.service-description-content h2 {
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+.service-description-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-dark-high-contrast);
+    margin-bottom: 1.5rem;
+}
+
+.service-description-content .highlight {
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+.service-image-container {
+    position: sticky;
+    top: 150px; /* Adjust based on header height */
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-heavy);
+}
+
+.service-image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ===== CALL TO ACTION SECTION ===== */
+.service-cta {
+    padding: 80px 0;
+    background-color: var(--gray-light);
+    text-align: center;
+}
+
+.service-cta h2 {
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+}
+
+.service-cta p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    color: var(--gray-dark-readable);
+}
+
+/* ===== RESPONSIVE STYLES FOR SERVICE PAGES ===== */
+@media (max-width: 992px) {
+    .service-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .service-image-container {
+        position: relative;
+        top: 0;
+        order: -1; /* Move image to the top on mobile */
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .service-hero {
+        min-height: 300px;
+        margin-top: 140px;
+        padding: 2rem 20px;
+    }
+
+    .service-hero-title {
+        font-size: 2.5rem;
+    }
+
+    .service-content-area, .service-cta {
+        padding: 60px 0;
+    }
+}
+
+/* /css/service-page.css */
+
+/* General Service Page Styles */
+.service-page {
+    padding-top: 150px; /* Adjust for fixed header */
+    padding-bottom: 60px;
+    background-color: #f9f9f9;
+}
+
+.service-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.service-title {
+    font-size: 3rem;
+    color: var(--primary-blue);
+    margin-bottom: 10px;
+}
+
+.service-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+.service-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.service-image img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+}
+
+.service-text h2 {
+    font-size: 2rem;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+}
+
+.service-text p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: var(--text-dark-high-contrast);
+}
+
+.service-cta {
+    margin-top: 30px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .service-content {
+        grid-template-columns: 1fr;
+    }
+    .service-image {
+        order: -1; /* Image on top on mobile */
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    .service-page {
+        padding-top: 120px;
+    }
+    .service-title {
+        font-size: 2.5rem;
+    }
+}
