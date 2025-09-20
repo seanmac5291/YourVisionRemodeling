@@ -251,16 +251,19 @@ a {
     gap: 2rem;
 }
 
+.nav-menu li a,
 .nav-menu a {
-    color: var(--text-dark);
+    color: #333333 !important;
     font-weight: 600;
     font-size: 1rem;
     transition: var(--transition);
     text-decoration: none;
+    display: block;
 }
 
+.nav-menu li a:hover,
 .nav-menu a:hover {
-    color: var(--primary-blue);
+    color: var(--primary-blue) !important;
 }
 
 /* ===== HERO SECTION ===== */
