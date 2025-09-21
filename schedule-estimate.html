@@ -277,37 +277,25 @@
             console.log('Booking confirmed for customer:', customerId);
             console.log('Calendly event data:', eventData);
             
-            // Extract appointment details from Calendly event
-            const appointmentDetails = {
-                eventName: eventData.event?.name || 'Free Estimate',
-                startTime: eventData.event?.start_time || 'Not specified',
-                endTime: eventData.event?.end_time || 'Not specified',
-                location: eventData.event?.location?.location || 'To be determined',
-                inviteeEmail: eventData.invitee?.email || customerData.email,
-                inviteeName: eventData.invitee?.name || customerData.fullName,
-                eventUri: eventData.event?.uri || '',
-                rescheduleUrl: eventData.invitee?.reschedule_url || '',
-                cancelUrl: eventData.invitee?.cancel_url || ''
-            };
+            // Extract just the UUID from the event URI for Zapier's Calendly integration
+            const fullEventUri = eventData.event?.uri || eventData.uri || '';
+            const eventUUID = fullEventUri ? fullEventUri.split('/').pop() : '';
             
-            // Send booking confirmation to Zapier with detailed appointment info
+            console.log('Extracted Event UUID:', eventUUID);
+            console.log('Full Event URI:', fullEventUri);
+            
+            // Send minimal booking confirmation data to Zapier
+            // Zapier will use the UUID to fetch all appointment details via Calendly integration
             const confirmationData = {
                 ...customerData,
                 intent: 'booking_confirmed',
                 customerId: customerId,
-                // Send appointment details as separate fields instead of nested object
-                appointmentName: appointmentDetails.eventName,
-                appointmentStartTime: appointmentDetails.startTime,
-                appointmentEndTime: appointmentDetails.endTime,
-                appointmentLocation: appointmentDetails.location,
-                appointmentUri: appointmentDetails.eventUri,
-                rescheduleUrl: appointmentDetails.rescheduleUrl,
-                cancelUrl: appointmentDetails.cancelUrl,
-                // Keep original event data as JSON string for reference
-                calendlyEventRaw: JSON.stringify(eventData),
+                eventUUID: eventUUID, // Only UUID needed - Zapier gets everything else from Calendly
                 timestamp: new Date().toISOString(),
                 source: 'calendly_booking_confirmation'
             };
+            
+            console.log('Sending confirmation data to Zapier:', confirmationData);
             
             try {
                 await sendToZapier(confirmationData);
@@ -515,4 +503,3 @@
     </script>
 </body>
 </html>
-``` 

@@ -25,6 +25,11 @@ function initializeWebsite() {
 function hideLoadingScreen() {
     const loadingScreen = document.getElementById('loading-screen');
     
+    if (!loadingScreen) {
+        // Loading screen doesn't exist on this page, skip
+        return;
+    }
+    
     setTimeout(() => {
         loadingScreen.style.opacity = '0';
         setTimeout(() => {
@@ -191,14 +196,22 @@ function initializeTestimonialCarousel() {
     const dots = document.querySelectorAll('.dot');
     let currentSlide = 0;
     
+    // Check if testimonial elements exist on this page
+    if (!slides.length || !dots.length) {
+        // Testimonial carousel elements don't exist on this page, skip
+        return;
+    }
+    
     function showSlide(index) {
         // Hide all slides
         slides.forEach(slide => slide.classList.remove('active'));
         dots.forEach(dot => dot.classList.remove('active'));
         
         // Show current slide
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
+        if (slides[index] && dots[index]) {
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
     }
     
     function nextSlide() {
@@ -227,19 +240,27 @@ function initializeContactForm() {
     const phoneInput = document.getElementById('phone');
     const scheduleBtn = document.querySelector('.schedule-btn');
 
+    // Check if contact form exists on this page
+    if (!form) {
+        // Contact form doesn't exist on this page, skip initialization
+        return;
+    }
+
     // ZAPIER WEBHOOK CONFIGURATION - Updated with actual webhook URL
     const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/24660064/umv86ib/';
     
-    // Phone number formatting
-    phoneInput.addEventListener('input', (e) => {
-        let value = e.target.value.replace(/\D/g, '');
-        if (value.length >= 6) {
-            value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
-        } else if (value.length >= 3) {
-            value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-        }
-        e.target.value = value;
-    });
+    // Phone number formatting (only if phone input exists)
+    if (phoneInput) {
+        phoneInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 6) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+            } else if (value.length >= 3) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+            }
+            e.target.value = value;
+        });
+    }
     
     // Add touch tracking for all form fields
     const formFields = form.querySelectorAll('input, select, textarea');
