@@ -350,12 +350,15 @@ function initializeContactForm() {
         console.log('Sending data to Zapier:', JSON.stringify(data, null, 2));
         
         try {
+            // Convert JSON data to FormData to avoid CORS issues
+            const formData = new FormData();
+            Object.keys(data).forEach(key => {
+                formData.append(key, data[key]);
+            });
+            
             const response = await fetch(ZAPIER_WEBHOOK_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
+                body: formData // Remove Content-Type header - let browser set it
             });
             
             if (!response.ok) {
