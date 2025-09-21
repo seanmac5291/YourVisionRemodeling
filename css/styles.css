@@ -121,7 +121,20 @@ a {
 
 .btn-full {
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 0; /* Remove bottom margin */
+    padding: 14px 30px;
+    background-color: var(--primary-blue);
+    color: white;
+    border: 2px solid var(--primary-blue);
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.btn-full:hover {
+    background-color: transparent;
+    color: var(--primary-blue);
+    border-color: var(--primary-blue);
 }
 
 .section-header {
@@ -1001,7 +1014,7 @@ a {
 .form-divider {
     display: flex;
     align-items: center;
-    margin: 2rem 0 1.5rem;
+    margin: 1.5rem 0 1rem; /* Reduced top margin from 2rem */
     text-align: center;
 }
 
@@ -2198,8 +2211,32 @@ a {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    background-color: var(--primary-yellow) !important;
+    color: var(--text-dark) !important;
+    border: none !important;
+    padding: 16px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
     transition: var(--transition);
-    margin-bottom: 0;
+    width: 100%;
+    margin-bottom: 1rem; /* Reduced from 2.5rem */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(252, 185, 39, 0.3);
+    text-decoration: none;
+}
+
+.schedule-btn:hover {
+    background-color: #e5a623 !important;
+    color: var(--text-dark) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(252, 185, 39, 0.4);
+}
+
+.schedule-btn i {
+    font-size: 1.2rem;
 }
 
 .schedule-btn:hover {
