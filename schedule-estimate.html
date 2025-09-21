@@ -263,16 +263,6 @@
             console.log('Booking confirmed for customer:', customerId);
             console.log('Calendly event data:', eventData);
             
-            // Mark booking as completed (prevents reminder email)
-            localStorage.setItem(`booking_completed_${customerId}`, 'true');
-            
-            // Clean up reminder timeout if it exists
-            const timeoutId = localStorage.getItem(`reminder_timeout_${customerId}`);
-            if (timeoutId) {
-                clearTimeout(parseInt(timeoutId));
-                localStorage.removeItem(`reminder_timeout_${customerId}`);
-            }
-            
             // Extract appointment details from Calendly event
             const appointmentDetails = {
                 eventName: eventData.event?.name || 'Free Estimate',
@@ -479,12 +469,6 @@
                 // Clear stored data
                 sessionStorage.removeItem('customerData');
                 sessionStorage.removeItem('customerId');
-                
-                // Clear any booking completion markers
-                const customerId = sessionStorage.getItem('customerId');
-                if (customerId) {
-                    localStorage.removeItem(`booking_completed_${customerId}`);
-                }
                 
                 window.location.href = 'index.html#contact';
             }

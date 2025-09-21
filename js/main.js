@@ -287,8 +287,8 @@ function initializeContactForm() {
                 sessionStorage.setItem('customerData', JSON.stringify(formData));
                 sessionStorage.setItem('customerId', customerId);
                 
-                // Set up 5-minute reminder timer
-                scheduleBookingReminder(customerId, formData);
+                // Remove client-side reminder - we'll handle this in Zapier
+                // scheduleBookingReminder(customerId, formData);
                 
                 // Redirect to schedule page
                 window.location.href = 'schedule-estimate.html';
@@ -302,15 +302,11 @@ function initializeContactForm() {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        console.log('Form submitted - starting validation...');
-        
         // Add submitted class to enable validation styling
         form.classList.add('submitted');
         
         if (validateForm()) {
-            console.log('Form validation passed, collecting data...');
             const formData = collectFormData();
-            console.log('Form data collected:', formData);
             
             // Send to Zapier with direct contact intent
             const zapierData = {
@@ -319,8 +315,6 @@ function initializeContactForm() {
                 timestamp: new Date().toISOString(),
                 source: 'website_contact_form'
             };
-            
-            console.log('About to send to Zapier...');
             
             try {
                 await sendToZapier(zapierData);
@@ -337,8 +331,6 @@ function initializeContactForm() {
             formFields.forEach(field => {
                 field.classList.remove('touched');
             });
-        } else {
-            console.log('Form validation failed');
         }
     });
     
@@ -379,43 +371,6 @@ function initializeContactForm() {
             console.error('Zapier webhook error:', error);
             throw error;
         }
-    }
-    
-    // Schedule 5-minute booking reminder
-    function scheduleBookingReminder(customerId, formData) {
-        const reminderTimeout = setTimeout(async () => {
-            // Check if booking was completed
-            const bookingCompleted = localStorage.getItem(`booking_completed_${customerId}`);
-            
-            if (!bookingCompleted) {
-                console.log('Sending booking reminder for customer:', customerId);
-                
-                // Send reminder to Zapier
-                const reminderData = {
-                    ...formData,
-                    intent: 'booking_reminder',
-                    customerId: customerId,
-                    timestamp: new Date().toISOString(),
-                    minutesElapsed: 5,
-                    source: 'website_reminder_system'
-                };
-                
-                try {
-                    await sendToZapier(reminderData);
-                    console.log('Booking reminder sent to Zapier');
-                } catch (error) {
-                    console.error('Error sending reminder to Zapier:', error);
-                }
-            } else {
-                console.log('Booking was completed, reminder cancelled');
-            }
-            
-            // Clean up
-            localStorage.removeItem(`reminder_timeout_${customerId}`);
-        }, 5 * 60 * 1000); // 5 minutes in milliseconds
-        
-        // Store timeout ID for potential cleanup
-        localStorage.setItem(`reminder_timeout_${customerId}`, reminderTimeout.toString());
     }
     
     function collectFormData() {
