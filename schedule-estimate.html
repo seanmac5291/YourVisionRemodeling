@@ -225,19 +225,106 @@
     
     <!-- Schedule Page Specific JavaScript -->
     <script>
+        // ZAPIER WEBHOOK CONFIGURATION - Updated with actual webhook URL
+        const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/24660064/umv86ib/';
+
         document.addEventListener('DOMContentLoaded', function() {
             initializeSchedulePage();
         });
 
         function initializeSchedulePage() {
             const customerData = JSON.parse(sessionStorage.getItem('customerData') || 'null');
-            
-            if (customerData) {
+            const customerId = sessionStorage.getItem('customerId');
+
+            if (customerData && customerId) {
                 displayCustomerInfo(customerData);
                 updateCalendlyURL(customerData);
+                
+                // Set up Calendly event listener for booking confirmation
+                setupCalendlyEventListener(customerId, customerData);
             } else {
                 // Redirect back to homepage if no customer data found
                 showNoDataMessage();
+            }
+        }
+
+        // Set up Calendly booking event listener
+        function setupCalendlyEventListener(customerId, customerData) {
+            window.addEventListener('message', function(e) {
+                // Listen for Calendly booking events
+                if (e.data.event && e.data.event === 'calendly.event_scheduled') {
+                    handleBookingConfirmation(customerId, customerData, e.data.payload);
+                }
+            });
+        }
+
+        // Handle booking confirmation
+        async function handleBookingConfirmation(customerId, customerData, eventData) {
+            console.log('Booking confirmed for customer:', customerId);
+            
+            // Mark booking as completed (prevents reminder email)
+            localStorage.setItem(`booking_completed_${customerId}`, 'true');
+            
+            // Clean up reminder timeout if it exists
+            const timeoutId = localStorage.getItem(`reminder_timeout_${customerId}`);
+            if (timeoutId) {
+                clearTimeout(parseInt(timeoutId));
+                localStorage.removeItem(`reminder_timeout_${customerId}`);
+            }
+            
+            // Send booking confirmation to Zapier
+            const confirmationData = {
+                ...customerData,
+                intent: 'booking_confirmed',
+                customerId: customerId,
+                calendlyEvent: eventData,
+                timestamp: new Date().toISOString(),
+                source: 'calendly_booking_confirmation'
+            };
+            
+            try {
+                await sendToZapier(confirmationData);
+                console.log('Booking confirmation sent to Zapier successfully');
+                
+                // Redirect to thank you page
+                setTimeout(() => {
+                    window.location.href = 'thank-you.html';
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error sending booking confirmation to Zapier:', error);
+                // Still redirect even if webhook fails
+                setTimeout(() => {
+                    window.location.href = 'thank-you.html';
+                }, 1000);
+            }
+        }
+
+        // Send data to Zapier webhook
+        async function sendToZapier(data) {
+            if (!ZAPIER_WEBHOOK_URL || ZAPIER_WEBHOOK_URL === 'REPLACE_WITH_YOUR_ZAPIER_WEBHOOK_URL') {
+                console.warn('Zapier webhook URL not configured on schedule page');
+                return;
+            }
+            
+            try {
+                const response = await fetch(ZAPIER_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                console.log('Data sent to Zapier from schedule page:', data.intent);
+                return response;
+            } catch (error) {
+                console.error('Zapier webhook error on schedule page:', error);
+                throw error;
             }
         }
 
@@ -363,7 +450,16 @@
 
         function editCustomerInfo() {
             if (confirm('This will take you back to the contact form to update your information. Continue?')) {
+                // Clear stored data
                 sessionStorage.removeItem('customerData');
+                sessionStorage.removeItem('customerId');
+                
+                // Clear any booking completion markers
+                const customerId = sessionStorage.getItem('customerId');
+                if (customerId) {
+                    localStorage.removeItem(`booking_completed_${customerId}`);
+                }
+                
                 window.location.href = 'index.html#contact';
             }
         }

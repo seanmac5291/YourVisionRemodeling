@@ -226,6 +226,9 @@ function initializeContactForm() {
     const form = document.getElementById('contact-form');
     const phoneInput = document.getElementById('phone');
     const scheduleBtn = document.querySelector('.schedule-btn');
+
+    // ZAPIER WEBHOOK CONFIGURATION - Updated with actual webhook URL
+    const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/24660064/umv86ib/';
     
     // Phone number formatting
     phoneInput.addEventListener('input', (e) => {
@@ -251,9 +254,9 @@ function initializeContactForm() {
         });
     });
     
-    // Handle schedule estimate button click
+    // Handle schedule estimate button click - CONVERT FROM LINK TO FORM HANDLER
     if (scheduleBtn) {
-        scheduleBtn.addEventListener('click', (e) => {
+        scheduleBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             
             // Add submitted class to enable validation styling
@@ -262,9 +265,30 @@ function initializeContactForm() {
             if (validateForm()) {
                 // Collect form data
                 const formData = collectFormData();
+                const customerId = generateCustomerId();
+                
+                // Send to Zapier with schedule intent
+                const zapierData = {
+                    ...formData,
+                    intent: 'schedule_intent',
+                    customerId: customerId,
+                    timestamp: new Date().toISOString(),
+                    source: 'website_contact_form'
+                };
+                
+                try {
+                    await sendToZapier(zapierData);
+                    console.log('Schedule intent sent to Zapier successfully');
+                } catch (error) {
+                    console.error('Error sending to Zapier:', error);
+                }
                 
                 // Store data in sessionStorage for the scheduling page
                 sessionStorage.setItem('customerData', JSON.stringify(formData));
+                sessionStorage.setItem('customerId', customerId);
+                
+                // Set up 5-minute reminder timer
+                scheduleBookingReminder(customerId, formData);
                 
                 // Redirect to schedule page
                 window.location.href = 'schedule-estimate.html';
@@ -274,14 +298,31 @@ function initializeContactForm() {
         });
     }
     
-    // Form validation and submission
-    form.addEventListener('submit', (e) => {
+    // Form validation and submission for direct contact
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         // Add submitted class to enable validation styling
         form.classList.add('submitted');
         
         if (validateForm()) {
+            const formData = collectFormData();
+            
+            // Send to Zapier with direct contact intent
+            const zapierData = {
+                ...formData,
+                intent: 'direct_contact',
+                timestamp: new Date().toISOString(),
+                source: 'website_contact_form'
+            };
+            
+            try {
+                await sendToZapier(zapierData);
+                console.log('Direct contact sent to Zapier successfully');
+            } catch (error) {
+                console.error('Error sending to Zapier:', error);
+            }
+            
             showSuccessMessage();
             form.reset();
             // Remove submitted class after successful submission
@@ -292,6 +333,76 @@ function initializeContactForm() {
             });
         }
     });
+    
+    // Generate unique customer ID
+    function generateCustomerId() {
+        return 'cust_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+    
+    // Send data to Zapier webhook
+    async function sendToZapier(data) {
+        if (!ZAPIER_WEBHOOK_URL || ZAPIER_WEBHOOK_URL === 'REPLACE_WITH_YOUR_ZAPIER_WEBHOOK_URL') {
+            console.warn('Zapier webhook URL not configured');
+            return;
+        }
+        
+        try {
+            const response = await fetch(ZAPIER_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            console.log('Data sent to Zapier:', data.intent);
+            return response;
+        } catch (error) {
+            console.error('Zapier webhook error:', error);
+            throw error;
+        }
+    }
+    
+    // Schedule 5-minute booking reminder
+    function scheduleBookingReminder(customerId, formData) {
+        const reminderTimeout = setTimeout(async () => {
+            // Check if booking was completed
+            const bookingCompleted = localStorage.getItem(`booking_completed_${customerId}`);
+            
+            if (!bookingCompleted) {
+                console.log('Sending booking reminder for customer:', customerId);
+                
+                // Send reminder to Zapier
+                const reminderData = {
+                    ...formData,
+                    intent: 'booking_reminder',
+                    customerId: customerId,
+                    timestamp: new Date().toISOString(),
+                    minutesElapsed: 5,
+                    source: 'website_reminder_system'
+                };
+                
+                try {
+                    await sendToZapier(reminderData);
+                    console.log('Booking reminder sent to Zapier');
+                } catch (error) {
+                    console.error('Error sending reminder to Zapier:', error);
+                }
+            } else {
+                console.log('Booking was completed, reminder cancelled');
+            }
+            
+            // Clean up
+            localStorage.removeItem(`reminder_timeout_${customerId}`);
+        }, 5 * 60 * 1000); // 5 minutes in milliseconds
+        
+        // Store timeout ID for potential cleanup
+        localStorage.setItem(`reminder_timeout_${customerId}`, reminderTimeout.toString());
+    }
     
     function collectFormData() {
         const firstName = document.getElementById('first-name').value.trim();
