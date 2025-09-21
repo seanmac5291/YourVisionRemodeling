@@ -346,6 +346,9 @@ function initializeContactForm() {
             return;
         }
         
+        // Debug: Log the data being sent
+        console.log('Sending data to Zapier:', JSON.stringify(data, null, 2));
+        
         try {
             const response = await fetch(ZAPIER_WEBHOOK_URL, {
                 method: 'POST',
@@ -359,7 +362,7 @@ function initializeContactForm() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
-            console.log('Data sent to Zapier:', data.intent);
+            console.log('Data sent to Zapier successfully:', data.intent);
             return response;
         } catch (error) {
             console.error('Zapier webhook error:', error);
