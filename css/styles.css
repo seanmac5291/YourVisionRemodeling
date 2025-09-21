@@ -2461,3 +2461,179 @@ a {
         font-size: 2.5rem;
     }
 }
+
+/* Customer Info Card */
+.customer-info-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 74, 118, 0.1);
+    border: 1px solid rgba(0, 74, 118, 0.1);
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(0, 74, 118, 0.1);
+}
+
+.info-header i {
+    color: var(--primary-blue);
+    font-size: 1.5rem;
+}
+
+.info-header h3 {
+    color: var(--primary-blue);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.info-content {
+    margin-bottom: 1.5rem;
+}
+
+.info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 0;
+}
+
+.info-row:last-child {
+    margin-bottom: 0;
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--primary-blue);
+    min-width: 80px;
+    flex-shrink: 0;
+    font-size: 1rem;
+}
+
+.info-value {
+    color: var(--text-dark-high-contrast) !important; /* Force black text for visibility */
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.edit-info-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.edit-info-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 74, 118, 0.2);
+}
+
+/* No Data Message */
+.no-data-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+    padding: 3rem 2rem;
+}
+
+.message-content {
+    text-align: center;
+    max-width: 500px;
+    background: white;
+    padding: 3rem 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 74, 118, 0.15);
+    border: 1px solid rgba(0, 74, 118, 0.1);
+}
+
+.message-content i {
+    color: var(--primary-blue);
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.message-content h3 {
+    color: var(--primary-blue);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.message-content p {
+    color: var(--text-dark-high-contrast);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.message-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.message-buttons .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 150px;
+    justify-content: center;
+}
+
+/* Responsive adjustments for schedule page components */
+@media (max-width: 768px) {
+    .customer-info-card {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .info-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .info-row {
+        flex-direction: column;
+        gap: 0.25rem;
+        align-items: flex-start;
+    }
+    
+    .info-label {
+        min-width: auto;
+        font-size: 0.9rem;
+    }
+    
+    .message-content {
+        padding: 2rem 1.5rem;
+        margin: 0 1rem;
+    }
+    
+    .message-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .message-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .message-buttons .btn {
+        width: 100%;
+        max-width: 250px;
+    }
+}

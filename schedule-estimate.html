@@ -92,8 +92,21 @@
         <section class="calendly-section">
             <div class="container-fluid">
                 <div class="calendly-wrapper">
+                    <!-- Customer Info Display -->
+                    <div id="customer-info-display" class="customer-info-card" style="display: none;">
+                        <div class="info-header">
+                            <i class="fas fa-user-check"></i>
+                            <h3>Your Information</h3>
+                        </div>
+                        <div class="info-content" id="customer-details"></div>
+                        <button class="btn btn-outline edit-info-btn" onclick="editCustomerInfo()">
+                            <i class="fas fa-edit"></i>
+                            Edit Information
+                        </button>
+                    </div>
+
                     <!-- Calendly inline widget begin -->
-                    <div class="calendly-inline-widget" data-url="https://calendly.com/jj-yvrroofing/yvremodeling" style="min-width:320px;height:950px;"></div>
+                    <div class="calendly-inline-widget" id="calendly-widget" data-url="https://calendly.com/jj-yvrroofing/yvremodeling" style="min-width:320px;height:950px;"></div>
                     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
                     <!-- Calendly inline widget end -->
                 </div>
@@ -209,5 +222,176 @@
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
+    
+    <!-- Schedule Page Specific JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSchedulePage();
+        });
+
+        function initializeSchedulePage() {
+            const customerData = JSON.parse(sessionStorage.getItem('customerData') || 'null');
+            
+            if (customerData) {
+                displayCustomerInfo(customerData);
+                updateCalendlyURL(customerData);
+            } else {
+                // Redirect back to homepage if no customer data found
+                showNoDataMessage();
+            }
+        }
+
+        function displayCustomerInfo(data) {
+            const infoDisplay = document.getElementById('customer-info-display');
+            const detailsContainer = document.getElementById('customer-details');
+            
+            detailsContainer.innerHTML = `
+                <div class="info-row">
+                    <span class="info-label">Name:</span>
+                    <span class="info-value">${data.fullName || `${data.firstName || ''} ${data.lastName || ''}`.trim()}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">${data.email || 'Not provided'}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Phone:</span>
+                    <span class="info-value">${data.phone || 'Not provided'}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Address:</span>
+                    <span class="info-value">${data.fullAddress || 'Not provided'}</span>
+                </div>
+                ${data.message ? `
+                <div class="info-row">
+                    <span class="info-label">Project:</span>
+                    <span class="info-value">${data.message}</span>
+                </div>` : ''}
+            `;
+            
+            infoDisplay.style.display = 'block';
+        }
+
+        function updateCalendlyURL(data) {
+            const widget = document.getElementById('calendly-widget');
+            const baseURL = 'https://calendly.com/jj-yvrroofing/yvremodeling';
+            
+            // Clean and format data before adding to URL
+            const cleanText = (text) => {
+                if (!text) return '';
+                return text.toString().trim().replace(/\s+/g, ' '); // Remove extra whitespace
+            };
+            
+            // Manual URL parameter building for better control over encoding
+            const urlParams = [];
+            
+            // Add first name and last name separately if available
+            if (data.firstName && data.firstName.trim()) {
+                urlParams.push(`first_name=${encodeURIComponent(cleanText(data.firstName))}`);
+            }
+            if (data.lastName && data.lastName.trim()) {
+                urlParams.push(`last_name=${encodeURIComponent(cleanText(data.lastName))}`);
+            }
+            
+            // If no separate names but have fullName, try to split it
+            if (!data.firstName && !data.lastName && data.fullName) {
+                const fullName = cleanText(data.fullName);
+                const nameParts = fullName.split(' ').filter(part => part.length > 0);
+                if (nameParts.length > 0) {
+                    urlParams.push(`first_name=${encodeURIComponent(nameParts[0])}`);
+                }
+                if (nameParts.length > 1) {
+                    urlParams.push(`last_name=${encodeURIComponent(nameParts.slice(1).join(' '))}`);
+                }
+            }
+            
+            // Add other information with proper cleaning
+            if (data.email && data.email.trim()) {
+                urlParams.push(`email=${encodeURIComponent(cleanText(data.email))}`);
+            }
+            
+            if (data.phone && data.phone.trim()) {
+                // Clean phone number - format nicely
+                let cleanPhone = data.phone.replace(/[^\d\s\-\(\)\+\.]/g, '').trim();
+                // Format as (XXX) XXX-XXXX if it's a 10-digit US number
+                const digits = cleanPhone.replace(/\D/g, '');
+                if (digits.length === 10) {
+                    cleanPhone = `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+                }
+                urlParams.push(`a1=${encodeURIComponent(cleanPhone)}`);
+            }
+            
+            if (data.fullAddress && data.fullAddress.trim()) {
+                // Clean address formatting
+                const cleanAddress = cleanText(data.fullAddress);
+                urlParams.push(`a2=${encodeURIComponent(cleanAddress)}`);
+            }
+            
+            if (data.message && data.message.trim()) {
+                urlParams.push(`a3=${encodeURIComponent(cleanText(data.message))}`);
+            } else {
+                urlParams.push(`a3=${encodeURIComponent('Estimate Request')}`);
+            }
+            
+            // Build final URL
+            const finalURL = urlParams.length > 0 ? `${baseURL}?${urlParams.join('&')}` : baseURL;
+            widget.setAttribute('data-url', finalURL);
+            
+            // Debug log to check URL formatting
+            console.log('Clean Calendly URL:', finalURL);
+            console.log('URL Parameters:', urlParams);
+            
+            // Reinitialize Calendly with new URL
+            if (window.Calendly) {
+                window.Calendly.initInlineWidget({
+                    url: finalURL,
+                    parentElement: widget
+                });
+            } else {
+                // Wait for Calendly script to load
+                const checkCalendly = setInterval(() => {
+                    if (window.Calendly) {
+                        clearInterval(checkCalendly);
+                        window.Calendly.initInlineWidget({
+                            url: finalURL,
+                            parentElement: widget
+                        });
+                    }
+                }, 100);
+            }
+        }
+
+        function editCustomerInfo() {
+            if (confirm('This will take you back to the contact form to update your information. Continue?')) {
+                sessionStorage.removeItem('customerData');
+                window.location.href = 'index.html#contact';
+            }
+        }
+
+        function showNoDataMessage() {
+            const calendlySection = document.querySelector('.calendly-section');
+            calendlySection.innerHTML = `
+                <div class="container">
+                    <div class="no-data-message">
+                        <div class="message-content">
+                            <i class="fas fa-info-circle"></i>
+                            <h3>Please Fill Out Contact Information First</h3>
+                            <p>To schedule your estimate, we need some basic information about you and your project. Please fill out our contact form first.</p>
+                            <div class="message-buttons">
+                                <a href="index.html#contact" class="btn btn-primary">
+                                    <i class="fas fa-arrow-left"></i>
+                                    Go to Contact Form
+                                </a>
+                                <a href="tel:1-800-297-9878" class="btn btn-outline">
+                                    <i class="fas fa-phone"></i>
+                                    Call Instead
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>

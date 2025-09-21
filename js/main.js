@@ -225,6 +225,7 @@ function initializeTestimonialCarousel() {
 function initializeContactForm() {
     const form = document.getElementById('contact-form');
     const phoneInput = document.getElementById('phone');
+    const scheduleBtn = document.querySelector('.schedule-btn');
     
     // Phone number formatting
     phoneInput.addEventListener('input', (e) => {
@@ -250,6 +251,29 @@ function initializeContactForm() {
         });
     });
     
+    // Handle schedule estimate button click
+    if (scheduleBtn) {
+        scheduleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Add submitted class to enable validation styling
+            form.classList.add('submitted');
+            
+            if (validateForm()) {
+                // Collect form data
+                const formData = collectFormData();
+                
+                // Store data in sessionStorage for the scheduling page
+                sessionStorage.setItem('customerData', JSON.stringify(formData));
+                
+                // Redirect to schedule page
+                window.location.href = 'schedule-estimate.html';
+            } else {
+                showErrorMessage('Please fill in all required fields before scheduling your estimate.');
+            }
+        });
+    }
+    
     // Form validation and submission
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -268,6 +292,34 @@ function initializeContactForm() {
             });
         }
     });
+    
+    function collectFormData() {
+        const firstName = document.getElementById('first-name').value.trim();
+        const lastName = document.getElementById('last-name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const state = document.getElementById('state').value;
+        const zip = document.getElementById('zip').value.trim();
+        const hearAbout = document.getElementById('hear-about').value;
+        const message = document.getElementById('message').value.trim();
+        
+        return {
+            firstName,
+            lastName,
+            email,
+            phone,
+            address,
+            city,
+            state,
+            zip,
+            hearAbout,
+            message,
+            fullName: `${firstName} ${lastName}`,
+            fullAddress: `${address}, ${city}, ${state} ${zip}`
+        };
+    }
     
     function validateForm() {
         const requiredFields = form.querySelectorAll('[required]');
