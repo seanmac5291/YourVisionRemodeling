@@ -250,10 +250,24 @@
 
         // Set up Calendly booking event listener
         function setupCalendlyEventListener(customerId, customerData) {
+            console.log('Setting up Calendly event listener for customer:', customerId);
+            
             window.addEventListener('message', function(e) {
+                console.log('Received message event:', e.data);
+                
                 // Listen for Calendly booking events
                 if (e.data.event && e.data.event === 'calendly.event_scheduled') {
+                    console.log('Calendly booking detected!', e.data);
                     handleBookingConfirmation(customerId, customerData, e.data.payload);
+                } else {
+                    console.log('Non-Calendly message received:', e.data.event);
+                }
+            });
+            
+            // Also listen for any Calendly events to debug
+            window.addEventListener('message', function(e) {
+                if (e.origin === 'https://calendly.com' || e.data.event?.startsWith('calendly')) {
+                    console.log('DEBUG - Calendly message:', e.data);
                 }
             });
         }
@@ -501,3 +515,4 @@
     </script>
 </body>
 </html>
+``` 
