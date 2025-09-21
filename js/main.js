@@ -302,11 +302,15 @@ function initializeContactForm() {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        console.log('Form submitted - starting validation...');
+        
         // Add submitted class to enable validation styling
         form.classList.add('submitted');
         
         if (validateForm()) {
+            console.log('Form validation passed, collecting data...');
             const formData = collectFormData();
+            console.log('Form data collected:', formData);
             
             // Send to Zapier with direct contact intent
             const zapierData = {
@@ -315,6 +319,8 @@ function initializeContactForm() {
                 timestamp: new Date().toISOString(),
                 source: 'website_contact_form'
             };
+            
+            console.log('About to send to Zapier...');
             
             try {
                 await sendToZapier(zapierData);
@@ -331,6 +337,8 @@ function initializeContactForm() {
             formFields.forEach(field => {
                 field.classList.remove('touched');
             });
+        } else {
+            console.log('Form validation failed');
         }
     });
     

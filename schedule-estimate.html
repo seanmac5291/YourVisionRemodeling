@@ -261,6 +261,7 @@
         // Handle booking confirmation
         async function handleBookingConfirmation(customerId, customerData, eventData) {
             console.log('Booking confirmed for customer:', customerId);
+            console.log('Calendly event data:', eventData);
             
             // Mark booking as completed (prevents reminder email)
             localStorage.setItem(`booking_completed_${customerId}`, 'true');
@@ -272,12 +273,34 @@
                 localStorage.removeItem(`reminder_timeout_${customerId}`);
             }
             
-            // Send booking confirmation to Zapier
+            // Extract appointment details from Calendly event
+            const appointmentDetails = {
+                eventName: eventData.event?.name || 'Free Estimate',
+                startTime: eventData.event?.start_time || 'Not specified',
+                endTime: eventData.event?.end_time || 'Not specified',
+                location: eventData.event?.location?.location || 'To be determined',
+                inviteeEmail: eventData.invitee?.email || customerData.email,
+                inviteeName: eventData.invitee?.name || customerData.fullName,
+                eventUri: eventData.event?.uri || '',
+                rescheduleUrl: eventData.invitee?.reschedule_url || '',
+                cancelUrl: eventData.invitee?.cancel_url || ''
+            };
+            
+            // Send booking confirmation to Zapier with detailed appointment info
             const confirmationData = {
                 ...customerData,
                 intent: 'booking_confirmed',
                 customerId: customerId,
-                calendlyEvent: eventData,
+                // Send appointment details as separate fields instead of nested object
+                appointmentName: appointmentDetails.eventName,
+                appointmentStartTime: appointmentDetails.startTime,
+                appointmentEndTime: appointmentDetails.endTime,
+                appointmentLocation: appointmentDetails.location,
+                appointmentUri: appointmentDetails.eventUri,
+                rescheduleUrl: appointmentDetails.rescheduleUrl,
+                cancelUrl: appointmentDetails.cancelUrl,
+                // Keep original event data as JSON string for reference
+                calendlyEventRaw: JSON.stringify(eventData),
                 timestamp: new Date().toISOString(),
                 source: 'calendly_booking_confirmation'
             };
